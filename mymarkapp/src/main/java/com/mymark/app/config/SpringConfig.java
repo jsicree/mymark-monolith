@@ -26,8 +26,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 //
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mymark.app.service.HelloService;
-import com.mymark.app.service.impl.HelloServiceImpl;
+import com.mymark.app.service.GreetingService;
+import com.mymark.app.service.impl.GreetingServiceImpl;
 
 
 // import org.springframework.dao.QueryTimeoutException;
@@ -42,10 +42,10 @@ import com.mymark.app.service.impl.HelloServiceImpl;
  */
 @Configuration
 @EnableJpaRepositories(basePackages = { "com.mymark.app.jpa.repository" })
-@PropertySource({ "classpath:config.properties" })
-//@IntegrationComponentScan("joe.spring.springapp.integration")
+@PropertySource({ "classpath:mymarkapp.properties" })
+//@IntegrationComponentScan("com.mymark.app.integration")
 //@EnableIntegration
-@EnableCaching
+//@EnableCaching
 public class SpringConfig {
 
 	private static final String PROPERTY_NAME_DATABASE_DRIVER_CLASS = "db.driverClass";
@@ -125,20 +125,20 @@ public class SpringConfig {
 		return new JpaTransactionManager(entityManagerFactory);
 	}
 
-	@Bean
-    public CacheManager cacheManager() {
-        // configure and return an implementation of Spring's CacheManager SPI
-        SimpleCacheManager cacheManager = new SimpleCacheManager();
-        ArrayList<ConcurrentMapCache> cacheList = new ArrayList<ConcurrentMapCache>();
-        cacheList.add(new ConcurrentMapCache("joe.spring.springapp.data.countries"));
-        cacheList.add(new ConcurrentMapCache("joe.spring.springapp.data.states"));        
-        cacheManager.setCaches(cacheList);
-        return cacheManager;
-    }	
+//	@Bean
+//    public CacheManager cacheManager() {
+//        // configure and return an implementation of Spring's CacheManager SPI
+//        SimpleCacheManager cacheManager = new SimpleCacheManager();
+//        ArrayList<ConcurrentMapCache> cacheList = new ArrayList<ConcurrentMapCache>();
+//        cacheList.add(new ConcurrentMapCache("joe.spring.springapp.data.countries"));
+//        cacheList.add(new ConcurrentMapCache("joe.spring.springapp.data.states"));        
+//        cacheManager.setCaches(cacheList);
+//        return cacheManager;
+//    }	
 		
 	@Bean
-	public HelloService helloService() {
-		return new HelloServiceImpl();
+	public GreetingService greetingService() {
+		return new GreetingServiceImpl();
 	}
 	
 	

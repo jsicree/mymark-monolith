@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.mymark.app.data.domain.Greeting;
 import com.mymark.app.data.reference.Language;
 import com.mymark.app.jpa.repository.GreetingRepository;
-import com.mymark.app.service.HelloService;
+import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
 
 /**
@@ -21,7 +21,7 @@ import com.mymark.app.service.ServiceException;
  *
  */
 @Service
-public class HelloServiceImpl implements HelloService {
+public class GreetingServiceImpl implements GreetingService {
 
 	@Autowired
 	private GreetingRepository greetingRepo;
@@ -31,7 +31,7 @@ public class HelloServiceImpl implements HelloService {
 	/**
 	 * 
 	 */
-	public HelloServiceImpl() {
+	public GreetingServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -46,7 +46,7 @@ public class HelloServiceImpl implements HelloService {
 		if (greeting != null) {
 			message = greeting.getSimpleMessage();
 		} else {
-			message = HelloServiceImpl.DEFAULT_MESSAGE;
+			message = GreetingServiceImpl.DEFAULT_MESSAGE;
 		}
 		return message ;
 	}
@@ -56,15 +56,19 @@ public class HelloServiceImpl implements HelloService {
 	 */
 	public String sayHello(String name) throws ServiceException {
 		String message = null;
-		
-		Greeting greeting = greetingRepo.findByLanguage(Language.ENG);
-		if (greeting != null) {
-			String namedMessage = greeting.getNamedMessage();
-			Map<String,String> map = new HashMap<String,String>();
-			map.put("name", name);
-			message = StrSubstitutor.replace(namedMessage, map,"{","}");
+
+		if (name != null) {
+			Greeting greeting = greetingRepo.findByLanguage(Language.ENG);
+			if (greeting != null) {
+				String namedMessage = greeting.getNamedMessage();
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("name", name);
+				message = StrSubstitutor.replace(namedMessage, map,"{","}");
+			} else {
+				message = GreetingServiceImpl.DEFAULT_MESSAGE;
+			}			
 		} else {
-			message = HelloServiceImpl.DEFAULT_MESSAGE;
+			message = sayHello();
 		}
 
 		return message;
