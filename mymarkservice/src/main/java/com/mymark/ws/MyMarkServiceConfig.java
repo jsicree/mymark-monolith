@@ -10,13 +10,14 @@ import org.springframework.core.env.Environment;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.mymark.ws" })
 @PropertySource({"classpath:swagger.properties"})
-public class MvcWebConfig extends WebMvcConfigurerAdapter {
+public class MyMarkServiceConfig implements WebMvcConfigurer {
 
 	@Resource
 	private Environment environment;
