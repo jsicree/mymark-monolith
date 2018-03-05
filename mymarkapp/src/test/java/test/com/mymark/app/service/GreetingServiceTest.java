@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
-import com.mymark.app.config.SpringConfig;
+import com.mymark.app.config.MyMarkAppConfig;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
 
@@ -32,7 +32,7 @@ public class GreetingServiceTest {
 		@BeforeClass
 		public static void setup() {
 
-			context = new AnnotationConfigApplicationContext(SpringConfig.class);		
+			context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);		
 			greetingService = (GreetingService) context
 					.getBean("greetingService");		
 

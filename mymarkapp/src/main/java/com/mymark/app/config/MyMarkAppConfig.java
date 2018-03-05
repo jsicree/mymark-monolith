@@ -46,7 +46,7 @@ import com.mymark.app.service.impl.GreetingServiceImpl;
 //@IntegrationComponentScan("com.mymark.app.integration")
 //@EnableIntegration
 //@EnableCaching
-public class SpringConfig {
+public class MyMarkAppConfig {
 
 	private static final String PROPERTY_NAME_DATABASE_DRIVER_CLASS = "db.driverClass";
 	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
