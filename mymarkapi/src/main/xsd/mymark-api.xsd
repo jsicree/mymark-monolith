@@ -13,13 +13,6 @@
 		</xs:appinfo>
 	</xs:annotation>
 
-	<xs:simpleType name="RequestStatus">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="OK" />
-			<xs:enumeration value="ERROR" />
-		</xs:restriction>
-	</xs:simpleType>
-
 	<xs:complexType name="ApiFieldError">
 		<xs:sequence>
 			<xs:element name="code" type="xs:string" />
@@ -44,84 +37,24 @@
 		</xs:complexType>
 	</xs:element>	
 
-	<xs:complexType name="CustomerDto">
+	<xs:complexType name="GreetingDto">
 		<xs:sequence>
-			<xs:element name="id" type="xs:long" />
-			<xs:element name="firstName" type="xs:string" />
-			<xs:element name="lastName" type="xs:string" />
-			<xs:element name="email" type="xs:string" />
+			<xs:element name="message" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="CustomerDtoList">
-		<xs:sequence>
-			<xs:element name="customers" type="tns:CustomerDto" maxOccurs="unbounded" minOccurs="0" />
-		</xs:sequence>
-	</xs:complexType>
-		
-	<xs:element name="CreateCustomerRequest">
+	<xs:element name="GreetingRequest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="firstName" type="xs:string" />
-				<xs:element name="lastName" type="xs:string" />
-				<xs:element name="email" type="xs:string" />
-				<xs:element name="password" type="xs:string" />				
+				<xs:element name="name" type="xs:string" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetCustomerByIdRequest">
+	<xs:element name="GreetingResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="id" type="xs:long" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
-	<xs:element name="GetCustomerByEmailRequest">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="email" type="xs:string" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
-	<xs:element name="CustomerResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="customer" type="tns:CustomerDto" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
-	<xs:element name="CustomersResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="customers" type="tns:CustomerDtoList" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
-	<xs:element name="DeleteCustomerRequest">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="email" type="xs:string" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
-	<xs:element name="DeleteCustomerResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="status" type="tns:RequestStatus" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
-	<xs:element name="DeleteAllCustomersResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="status" type="tns:RequestStatus" />
+				<xs:element name="greeting" type="tns:GreetingDto" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

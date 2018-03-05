@@ -14,7 +14,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.mymark.app.config.SpringConfig;
-import com.mymark.app.service.HelloService;
+import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
 
 /**
@@ -22,19 +22,19 @@ import com.mymark.app.service.ServiceException;
  *
  */
 @RunWith(JUnit4.class)
-public class HelloServiceTest {
+public class GreetingServiceTest {
 
-		protected final static Logger log = LoggerFactory.getLogger(HelloServiceTest.class); 
+		protected final static Logger log = LoggerFactory.getLogger(GreetingServiceTest.class); 
 
-		private static HelloService helloService;
+		private static GreetingService greetingService;
 		private static AbstractApplicationContext context;
 		
 		@BeforeClass
 		public static void setup() {
 
 			context = new AnnotationConfigApplicationContext(SpringConfig.class);		
-			helloService = (HelloService) context
-					.getBean("helloService");		
+			greetingService = (GreetingService) context
+					.getBean("greetingService");		
 
 		}
 
@@ -43,7 +43,7 @@ public class HelloServiceTest {
 
 			log.info(">> Entering sayHello.");
 			try {
-				String message = helloService.sayHello();
+				String message = greetingService.sayHello();
 				org.junit.Assert.assertNotNull("SayHello has returned null.", message);			
 				log.debug("SayHello() has returned: " + message);
 			} catch (ServiceException e) {
@@ -62,7 +62,7 @@ public class HelloServiceTest {
 			String name = "John Doe";
 			
 			try {
-				String message = helloService.sayHello(name);
+				String message = greetingService.sayHello(name);
 				org.junit.Assert.assertNotNull("SayHello(name) has returned null.", message);						
 				log.debug("SayHello(name) has returned: " + message);
 			} catch (ServiceException e) {
