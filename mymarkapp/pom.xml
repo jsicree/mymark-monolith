@@ -39,6 +39,9 @@
 		<!-- Maven Javadoc Plugin -->
 		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
 
+		<!-- Maven Jar Plugin -->
+		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+
 	</properties>
 	<dependencies>
 	
@@ -185,6 +188,18 @@
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>${maven-javadoc-plugin.version}</version>
 				</plugin>
+<!-- 
+				<plugin>
+			        <groupId>org.apache.maven.plugins</groupId>
+			        <artifactId>maven-jar-plugin</artifactId>
+			        <version>${maven-jar-plugin.version}</version>
+			        <configuration>
+			          <excludes>
+			            <exclude>**/mymarkapp.properties</exclude>
+			          </excludes>
+			        </configuration>
+			    </plugin>
+ -->			    
 			</plugins>
 		</pluginManagement>
 	</build>
