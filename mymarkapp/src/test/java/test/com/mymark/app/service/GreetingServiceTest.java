@@ -14,6 +14,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.mymark.app.config.MyMarkAppConfig;
+import com.mymark.app.data.reference.Language;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
 
@@ -56,6 +57,36 @@ public class GreetingServiceTest {
 		
 
 		@Test
+		public void sayHelloInLanguage() {
+
+			log.info(">> Entering sayHelloInLanguage.");
+			try {
+				String message = greetingService.sayHello(Language.FRA);
+				org.junit.Assert.assertNotNull("SayHello has returned null.", message);			
+				log.debug("SayHello() has returned: " + message);
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
+			
+			log.info("<< Leaving sayHelloInLanguage.");
+		}
+		
+		@Test
+		public void sayHelloBadLanguage() {
+
+			log.info(">> Entering sayHelloBadLanguage.");
+			try {
+				String message = greetingService.sayHello(Language.UNK);
+				org.junit.Assert.fail("Call to sayHello using unknown language did not throw ServiceException");
+			} catch (ServiceException e) {
+				log.debug("Call to sayHello() with unknown language threw a ServiceException: " + e.getMessage());
+			}
+			
+			log.info("<< Leaving sayHelloBadLanguage.");
+		}
+
+		
+		@Test
 		public void sayHelloByName() {
 
 			log.info(">> Entering sayHelloByName.");
@@ -72,6 +103,37 @@ public class GreetingServiceTest {
 			log.info("<< Leaving sayHelloByName.");
 		}
 		
+		@Test
+		public void sayHelloByNameInLanguage() {
+
+			log.info(">> Entering sayHelloByNameInLanguage.");
+			String name = "John Doe";
+			
+			try {
+				String message = greetingService.sayHello(Language.FRA, name);
+				org.junit.Assert.assertNotNull("SayHello(name) has returned null.", message);						
+				log.debug("SayHello(name) has returned: " + message);
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
+			log.info("<< Leaving sayHelloByName.");
+		}
+
+		@Test
+		public void sayHelloByNameBadLanguage() {
+
+			log.info(">> Entering sayHelloByNameBadLanguage.");
+			String name = "John Doe";
+			
+			try {
+				String message = greetingService.sayHello(Language.UNK, name);
+				org.junit.Assert.fail("Call to sayHello(language, name) using unknown language did not throw ServiceException");
+			} catch (ServiceException e) {
+				log.debug("Call to sayHello(language, name) with unknown language threw a ServiceException: " + e.getMessage());
+			}
+
+			log.info("<< Leaving sayHelloByNameBadLanguage.");
+		}
 		
 		@AfterClass
 		public static void after() {
