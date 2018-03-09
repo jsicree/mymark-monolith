@@ -78,7 +78,11 @@ public class GreetingServiceController {
 
 		try {
 			if (request.getName() != null) {
-				greeting.setMessage(greetingService.sayHello(request.getName()));				
+				if (request.getName().equalsIgnoreCase("BAD_NAME")) {
+					throw new ApiException("Request contained name " + request.getName());
+				} else {
+					greeting.setMessage(greetingService.sayHello(request.getName()));				
+				}
 			} else {
 				greeting.setMessage(greetingService.sayHello());								
 			}

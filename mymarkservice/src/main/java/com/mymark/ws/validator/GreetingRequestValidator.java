@@ -7,6 +7,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.mymark.api.GreetingRequest;
+import com.mymark.ws.ApiErrorCode;
+import com.mymark.ws.ApiMessages;
 
 @Component
 public class GreetingRequestValidator implements Validator {
@@ -29,14 +31,10 @@ public class GreetingRequestValidator implements Validator {
 		GreetingRequest request = (GreetingRequest) target;
 
 		log.debug("Validating greeting request.");
+		if (request.getName() != null && request.getName().isEmpty()) {
+			errors.rejectValue("name", ApiErrorCode.EMPTY_VALUE.getCode(), ApiMessages.EMPTY_VALUE_MSG);			
+		}
 //		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", ApiErrorCode.NULL_OR_EMPTY_VALUE.getCode(), ApiMessages.NULL_OR_EMPTY_VALUE_MSG);
-//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", ApiErrorCode.NULL_OR_EMPTY_VALUE.getCode(), ApiMessages.NULL_OR_EMPTY_VALUE_MSG);
-//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", ApiErrorCode.NULL_OR_EMPTY_VALUE.getCode(), ApiMessages.NULL_OR_EMPTY_VALUE_MSG);
-//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", ApiErrorCode.NULL_OR_EMPTY_VALUE.getCode(), ApiMessages.NULL_OR_EMPTY_VALUE_MSG);
-
-//		if (request.getBirthDate() == null) {
-//			errors.rejectValue("birthDate", ApiErrorCode.NULL_OR_EMPTY_VALUE.getCode(), ApiMessages.NULL_OR_EMPTY_VALUE_MSG);
-//		}
 		
 	}
 
