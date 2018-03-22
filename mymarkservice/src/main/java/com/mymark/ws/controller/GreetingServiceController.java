@@ -12,15 +12,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mymark.api.ErrorResponse;
 import com.mymark.api.GreetingDto;
 import com.mymark.api.GreetingRequest;
 import com.mymark.api.GreetingResponse;
+import com.mymark.app.data.reference.Language;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
 import com.mymark.ws.ApiException;
@@ -46,45 +49,39 @@ public class GreetingServiceController {
 
 	protected final static Logger log = LoggerFactory.getLogger(GreetingServiceController.class);
 
-	@Autowired
-	@Qualifier("greetingRequestValidator")
-	private Validator greetingValidator;
-
-	@InitBinder("greetingRequest")
-	public void setupCreateCustomerBinder(WebDataBinder binder) {
-		binder.addValidators(greetingValidator);
-	}
-
 	public GreetingServiceController() {
 
 	}
 
-	
-	@ApiOperation(value = "${ApiOp.GreetingServiceController.sayHello.value}",
-		      notes = "${ApiOp.GreetingServiceController.sayHello.notes}")
-	@ApiResponses(value = {
-	         @ApiResponse(code = 200, message = "The operation was successful.", response = GreetingResponse.class),
-	        @ApiResponse(code = 422, message = "The operation input failed validation", response = ErrorResponse.class),
-			@ApiResponse(code = 500, message = "An internal server error has occurred", response = ErrorResponse.class)})	
-	@RequestMapping(value = "/v1/sayHello", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<GreetingResponse> sayHello(
-			@ApiParam(value = "${ApiParam.CustomerServiceController.createCustomer.request}", required = true)			
-			@Valid @RequestBody GreetingRequest request)
-			throws ApiException {
-		log.info("In sayHello...");
+	@RequestMapping(value = "/{langCode}/hello", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<GreetingResponse> sayHello(@PathVariable(required = true) String langCode,
+			@RequestParam(required = false) String name) throws ApiException {
+		log.info("In hello...");
+		log.debug("/hello params: langCode = " + langCode + "; name = " + name);
+		Language language = null;
+		if (langCode != null) {
+
+			try {
+				language = Language.valueOf(langCode.toUpperCase());
+			} catch (IllegalArgumentException | NullPointerException e) {
+				throw new ApiException("Language code " + langCode + " is not supported.");
+			}
+
+		}
+
 		GreetingResponse response = new GreetingResponse();
 
 		GreetingDto greeting = new GreetingDto();
 
 		try {
-			if (request.getName() != null) {
-				if (request.getName().equalsIgnoreCase("BAD_NAME")) {
-					throw new ApiException("Request contained name " + request.getName());
+			if (name != null && name.isEmpty() == false) {
+				if (name.equalsIgnoreCase("BAD_NAME")) {
+					throw new ApiException("Request contained name " + name);
 				} else {
-					greeting.setMessage(greetingService.sayHello(request.getName()));				
+					greeting.setMessage(greetingService.sayHello(language, name));
 				}
 			} else {
-				greeting.setMessage(greetingService.sayHello());								
+				greeting.setMessage(greetingService.sayHello(language));
 			}
 			response.setGreeting(greeting);
 		} catch (ServiceException e) {
