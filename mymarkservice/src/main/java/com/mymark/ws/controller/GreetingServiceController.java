@@ -1,38 +1,24 @@
 package com.mymark.ws.controller;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mymark.api.ErrorResponse;
 import com.mymark.api.GreetingDto;
-import com.mymark.api.GreetingRequest;
 import com.mymark.api.GreetingResponse;
 import com.mymark.app.data.reference.Language;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
 import com.mymark.ws.ApiException;
 import com.mymark.ws.ApiMessages;
-
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  * Handles requests for the form page examples.
