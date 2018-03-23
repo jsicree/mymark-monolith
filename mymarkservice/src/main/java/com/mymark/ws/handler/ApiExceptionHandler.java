@@ -79,8 +79,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		ArrayList<ApiGlobalError> globalErrors = new ArrayList<ApiGlobalError>();
 		
 		ApiGlobalError globalError = new ApiGlobalError();
-		globalError.setCode(ApiErrorCode.SERVICE_EXCEPTION.getCode());
-		globalError.setMessage(ApiMessages.SERVICE_EXCEPTION_MSG);
+		globalError.setCode(ApiErrorCode.API_EXCEPTION.getCode());
+		globalError.setMessage(ApiMessages.API_EXCEPTION_MSG);
 		globalErrors.add(globalError);
 
 		ErrorResponse resp = new ErrorResponse();
@@ -89,25 +89,26 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
+
+	@ExceptionHandler(value={IllegalArgumentException.class})
+	public ResponseEntity<Object> handleIllegalArgumentException(Exception ex, WebRequest request) {
+
+		log.debug("In handleIllegalArgumentException. Exception = " + ex.getMessage());
+		log.error(ex.getMessage());
+		
+		ArrayList<ApiGlobalError> globalErrors = new ArrayList<ApiGlobalError>();
+		
+		ApiGlobalError globalError = new ApiGlobalError();
+		globalError.setCode(ApiErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getCode());
+		globalError.setMessage(ex.getMessage());
+		globalErrors.add(globalError);
+
+		ErrorResponse resp = new ErrorResponse();
+		resp.getGlobalErrors().addAll(globalErrors);
+				
+		return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
+		
+	}
 	
-//	@ExceptionHandler(value={AccessDeniedException.class})
-//	public ResponseEntity<Object> handleAccessDeniedException(Exception ex, WebRequest request) {
-//
-//		log.debug("In handleAccessDeniedException.");
-//		log.error(ex.getMessage());
-//		
-//		ArrayList<ApiGlobalError> globalErrors = new ArrayList<ApiGlobalError>();
-//		
-//		ApiGlobalError globalError = new ApiGlobalError();
-//		globalError.setCode(ApiErrorCode.ACCESS_DENIED.getCode());
-//		globalError.setMessage(ApiMessages.ACCESS_DENIED_MSG);
-//		globalErrors.add(globalError);
-//
-//		ErrorResponse resp = new ErrorResponse();
-//		resp.getGlobalErrors().addAll(globalErrors);
-//				
-//		return new ResponseEntity<>(resp, HttpStatus.FORBIDDEN);
-//		
-//	}
 	
 }

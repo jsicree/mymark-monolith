@@ -4,6 +4,6 @@ public final class ApiMessages {
 
 	public static final String INVALID_VALUE_MSG = "The value is invalid.";
 	public static final String EMPTY_VALUE_MSG = "The value is an empty string.";
-	public static final String SERVICE_EXCEPTION_MSG = "An unknown service error has occurred.";
+	public static final String API_EXCEPTION_MSG = "An API error has occurred.";
 
 }

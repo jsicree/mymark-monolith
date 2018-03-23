@@ -50,7 +50,7 @@ public class GreetingServiceController {
 			try {
 				language = Language.valueOf(langCode.toUpperCase());
 			} catch (IllegalArgumentException | NullPointerException e) {
-				throw new ApiException("Language code " + langCode + " is not supported.");
+				throw new IllegalArgumentException("Language code " + langCode + " is not supported.");
 			}
 
 		}
@@ -73,7 +73,7 @@ public class GreetingServiceController {
 		} catch (ServiceException e) {
 			log.error("ServiceException thrown while creating customer.", e);
 			e.printStackTrace();
-			throw new ApiException(ApiMessages.SERVICE_EXCEPTION_MSG, e);
+			throw new ApiException(ApiMessages.API_EXCEPTION_MSG, e);
 		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

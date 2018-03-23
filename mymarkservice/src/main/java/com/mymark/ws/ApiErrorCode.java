@@ -3,7 +3,8 @@ package com.mymark.ws;
 public enum ApiErrorCode {
 	INVALID_VALUE("InvalidValue"),
 	EMPTY_VALUE("EmptyValue"),
-	SERVICE_EXCEPTION("ApiException");
+	API_EXCEPTION("ApiException"),
+	ILLEGAL_ARGUMENT_EXCEPTION("IllegalArgumentException");
 	
 	private String code;
 	
