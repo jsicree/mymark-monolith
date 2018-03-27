@@ -43,14 +43,6 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name="GreetingRequest">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="name" type="xs:string" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
 	<xs:element name="GreetingResponse">
 		<xs:complexType>
 			<xs:sequence>
