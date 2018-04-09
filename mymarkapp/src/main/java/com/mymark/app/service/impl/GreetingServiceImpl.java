@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mymark.app.data.domain.Greeting;
-import com.mymark.app.data.reference.Language;
+import com.mymark.app.data.enums.Language;
 import com.mymark.app.jpa.repository.GreetingRepository;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;

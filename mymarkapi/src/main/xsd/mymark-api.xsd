@@ -51,4 +51,48 @@
 		</xs:complexType>
 	</xs:element>
 
+	<xs:complexType name="CustomerDto">
+		<xs:sequence>
+			<xs:element name="firstName" type="xs:string" />
+			<xs:element name="lastName" type="xs:string" />
+			<xs:element name="userName" type="xs:string" />
+			<xs:element name="email" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AccountDto">
+		<xs:sequence>
+			<xs:element name="status" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="NewCustomerRequest">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="firstName" type="xs:string" />
+			<xs:element name="lastName" type="xs:string" />
+			<xs:element name="userName" type="xs:string" />
+			<xs:element name="email" type="xs:string" />
+			<xs:element name="password" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CustomerResponse">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="customer" type="tns:CustomerDto" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CustomerDetailsResponse">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="customer" type="tns:CustomerDto" />
+			<xs:element name="account" type="tns:AccountDto" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
 </xs:schema>

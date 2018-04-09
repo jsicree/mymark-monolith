@@ -1,15 +1,15 @@
-package com.mymark.app.data.reference;
+package com.mymark.app.data.enums;
 
-public enum Language {
-	ENG (1L, "English"),
-	SPA (2L, "Spanish"),
-	FRA (3L, "French"),
-	UNK (4L, "Unknown");
+public enum AccountStatus {
+	NEW (1L, "New"),
+	CURRENT (2L, "Current"),
+	SUSPENDED (3L, "Suspended"),
+	TERMINATED (4L, "Terminated");
 	
     private final Long id;  
     private final String longName; 
 
-    Language(Long id, String longName) {
+    AccountStatus(Long id, String longName) {
         this.id = id;
         this.longName = longName;
     }

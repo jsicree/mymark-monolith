@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mymark.api.GreetingDto;
 import com.mymark.api.GreetingResponse;
-import com.mymark.app.data.reference.Language;
+import com.mymark.app.data.enums.Language;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
 import com.mymark.ws.ApiException;

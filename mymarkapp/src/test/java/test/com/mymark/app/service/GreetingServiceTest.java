@@ -14,7 +14,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.mymark.app.config.MyMarkAppConfig;
-import com.mymark.app.data.reference.Language;
+import com.mymark.app.data.enums.Language;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
 
