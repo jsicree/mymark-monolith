@@ -2,9 +2,12 @@ package com.mymark.ws;
 
 public enum ApiErrorCode {
 	INVALID_VALUE("InvalidValue"),
-	EMPTY_VALUE("EmptyValue"),
+	NULL_OR_EMPTY_VALUE("NullOrEmptyValue"),
 	API_EXCEPTION("ApiException"),
-	ILLEGAL_ARGUMENT_EXCEPTION("IllegalArgumentException");
+	ILLEGAL_ARGUMENT_EXCEPTION("IllegalArgumentException"), 
+	USERNAME_EXISTS("UserNameExists"), 
+	EMAIL_EXISTS("EmailExists"), 
+	SERVICE_EXCEPTION("ServiceException");
 	
 	private String code;
 	

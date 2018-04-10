@@ -32,5 +32,9 @@ public class MyMarkServiceConfig implements WebMvcConfigurer {
 	
 	}
 
-
+	@Bean
+	public Validator newCustomerRequestValidator() {
+		return new com.mymark.ws.validator.NewCustomerRequestValidator();
+	}
+	
 }
