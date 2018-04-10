@@ -73,7 +73,6 @@ public class CustomerServiceController {
 		log.debug("Last Name:" + request.getLastName());
 		log.debug("User Name:" + request.getUserName());
 		log.debug("Email:" + request.getEmail());
-		log.debug("Password:" + request.getPassword());
 		log.debug("--NewCustomerRequest--");
 
 		Customer newCustomer;
