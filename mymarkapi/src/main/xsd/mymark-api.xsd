@@ -53,6 +53,7 @@
 
 	<xs:complexType name="CustomerDto">
 		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
 			<xs:element name="firstName" type="xs:string" />
 			<xs:element name="lastName" type="xs:string" />
 			<xs:element name="userName" type="xs:string" />
@@ -62,6 +63,7 @@
 
 	<xs:complexType name="AccountDto">
 		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
 			<xs:element name="status" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>

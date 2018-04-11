@@ -1,5 +1,7 @@
 package test.com.mymark.api.client;
 
+import java.util.ArrayList;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,24 +42,24 @@ public class CustomerRestClientTest {
 	@Test
 	public void createNewCustomer() {
 
+		ArrayList<Long> idList = new ArrayList<Long>();
+		
 		for (int x = 0; x < customerData.length; x++) {
 			try {
 				CustomerDto dto = client.createNewCustomer(
 						customerData[x][0], customerData[x][1], customerData[x][2], customerData[x][3], customerData[x][4]);
 				org.junit.Assert.assertNotNull("REST Client call to POST /customer has returned null.", dto);
 				log.info("REST Client POST to /customer has returned: " + dto);
+				idList.add(dto.getId());
 			} catch (ClientException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
-		for (int x = 0; x < customerData.length; x++) {
+		for (Long id: idList) {
 			try {
-				CustomerDto dto = client.deleteCustomer(customerData[x][2]);
-				org.junit.Assert.assertNotNull("REST Client call to DELETE /customer has returned null.", dto);
-				log.info("REST Client DELETE to /customer has returned: " + dto);
-				
+				client.deleteCustomer(id);
 			} catch (ClientException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

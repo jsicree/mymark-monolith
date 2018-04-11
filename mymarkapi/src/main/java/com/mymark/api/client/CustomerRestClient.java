@@ -77,17 +77,12 @@ public class CustomerRestClient {
 		return response.getCustomer();
 	}
 
-	public CustomerDto deleteCustomer(String userName) throws ClientException {
+	public void deleteCustomer(Long id) throws ClientException {
 
-		CustomerResponse response = new CustomerResponse();
-
-		log.info("Deleting customer: " + userName);
+		log.info("Deleting customer: " + id);
 		try {
-			HttpEntity entity = new HttpEntity(headers);
-			ResponseEntity<CustomerResponse> resp = restTemplate.exchange(customerUrl + "/" + userName, HttpMethod.DELETE, entity, CustomerResponse.class);
-			if (resp != null) {
-				response = resp.getBody();
-			}
+			restTemplate.delete(customerUrl + "/" + id);
+			log.info("Customer deleted.");
 		} catch (HttpStatusCodeException sce) {
 			log.error("An HttpStatusCodeException was thrown calling the /customer web service method. HTTP status code: " + sce.getRawStatusCode());
 			log.error("ErrorResponse for HttpStatusCodeException: " + sce.getResponseBodyAsString());
@@ -96,7 +91,6 @@ public class CustomerRestClient {
 			log.error("A RestClientException was thrown calling the /customer web service method.");
 			throw new ClientException("RestClientException caught after call to /customer web service method.", rce);					
 		}
-		return response.getCustomer();
 	}
 	
 }

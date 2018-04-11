@@ -93,18 +93,18 @@ public class CustomerServiceController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/customer/{userName}", method = RequestMethod.DELETE, produces = "application/json")
-	public ResponseEntity<CustomerResponse> deleteCustomer(
-			@PathVariable(required = true) String userName) throws ApiException {
+	@RequestMapping(value = "/customer/{id}", method = RequestMethod.DELETE, produces = "application/json")
+	public ResponseEntity<?> deleteCustomer(
+			@PathVariable(required = true) Long id) throws ApiException {
 		
 		
 		log.info("In deleteCustomer...");
-		log.debug("Deleting customer: " + userName);
+		log.debug("Deleting customer: " + id);
 		
 		CustomerResponse response = new CustomerResponse();
 
 		try {
-			Customer customer = customerService.lookupCustomerByUserName(userName);
+			Customer customer = customerService.lookupCustomerById(id);
 			if (customer != null) {
 				credentialService.removeCredential(customer.getId());
 				customerService.deleteCustomer(customer.getId());
@@ -114,8 +114,7 @@ public class CustomerServiceController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return new ResponseEntity<>(id, HttpStatus.OK);
 		
 	}
 	
