@@ -93,21 +93,21 @@ public class CustomerServiceController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/customer/{id}", method = RequestMethod.DELETE, produces = "application/json")
+	@RequestMapping(value = "/customer/{userName}", method = RequestMethod.DELETE, produces = "application/json")
 	public ResponseEntity<CustomerResponse> deleteCustomer(
-			@PathVariable(required = true) Long id) throws ApiException {
+			@PathVariable(required = true) String userName) throws ApiException {
 		
 		
 		log.info("In deleteCustomer...");
-		log.debug("Deleting customer: " + id);
+		log.debug("Deleting customer: " + userName);
 		
 		CustomerResponse response = new CustomerResponse();
 
 		try {
-			Customer customer = customerService.lookupCustomerById(id);
+			Customer customer = customerService.lookupCustomerByUserName(userName);
 			if (customer != null) {
 				credentialService.removeCredential(customer.getId());
-				customerService.deleteCustomer(id);
+				customerService.deleteCustomer(customer.getId());
 				response.setCustomer(DTOConverter.toCustomerDto(customer));
 			}
 		} catch (ServiceException e) {

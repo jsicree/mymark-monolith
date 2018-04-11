@@ -6,9 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.mymark.api.CustomerDto;
@@ -18,9 +21,10 @@ import com.mymark.api.NewCustomerRequest;
 @Component
 public class CustomerRestClient {
 
-	private String createNewCustomerUrl;
+	private String customerUrl;
 
 	private RestTemplate restTemplate;
+	private HttpHeaders headers;
 
 	protected final static Logger log = LoggerFactory
 			.getLogger(CustomerRestClient.class);
@@ -29,20 +33,22 @@ public class CustomerRestClient {
 	public CustomerRestClient() {
 		super();
 		restTemplate = new RestTemplate();
+		headers = new HttpHeaders();
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		
 	}
 
-	public CustomerRestClient(String createNewCustomerUrl) {
+	public CustomerRestClient(String customerUrl) {
 		this();
-		this.createNewCustomerUrl = createNewCustomerUrl;
+		this.customerUrl = customerUrl;
 	}
 
-	public String getCreateNewCustomerUrl() {
-		return createNewCustomerUrl;
+	public String getCustomerUrl() {
+		return customerUrl;
 	}
 
-	public void setCreateNewCustomerUrl(String createNewCustomerUrl) {
-		this.createNewCustomerUrl = createNewCustomerUrl;
+	public void setCustomerUrl(String customerUrl) {
+		this.customerUrl = customerUrl;
 	}
 
 	
@@ -58,16 +64,39 @@ public class CustomerRestClient {
 		request.setPassword(password);
 
 		try {
-			HttpHeaders headers = new HttpHeaders();
-			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 			HttpEntity<NewCustomerRequest> entity = new HttpEntity<NewCustomerRequest>(request, headers);
-			response = restTemplate.postForObject(createNewCustomerUrl, entity, CustomerResponse.class);
+			response = restTemplate.postForObject(customerUrl, entity, CustomerResponse.class);
 		} catch (HttpStatusCodeException sce) {
-			log.error("An HttpStatusCodeException was thrown calling the createNewCustomer service. HTTP status code: " + sce.getRawStatusCode());
+			log.error("An HttpStatusCodeException was thrown calling the /customer web service method. HTTP status code: " + sce.getRawStatusCode());
 			log.error("ErrorResponse for HttpStatusCodeException: " + sce.getResponseBodyAsString());
-			throw new ClientException("HttpStatusCodeException caught after call to createNewCustomer service. HTTP status code: " + sce.getRawStatusCode(), sce);			
-		}		
+			throw new ClientException("HttpStatusCodeException caught after call to /customer web service method. HTTP status code: " + sce.getRawStatusCode(), sce);			
+		} catch (RestClientException rce) {
+			log.error("A RestClientException was thrown calling the /customer web service method.");
+			throw new ClientException("RestClientException caught after call to /customer web service method.", rce);					
+		}
 		return response.getCustomer();
 	}
-		
+
+	public CustomerDto deleteCustomer(String userName) throws ClientException {
+
+		CustomerResponse response = new CustomerResponse();
+
+		log.info("Deleting customer: " + userName);
+		try {
+			HttpEntity entity = new HttpEntity(headers);
+			ResponseEntity<CustomerResponse> resp = restTemplate.exchange(customerUrl + "/" + userName, HttpMethod.DELETE, entity, CustomerResponse.class);
+			if (resp != null) {
+				response = resp.getBody();
+			}
+		} catch (HttpStatusCodeException sce) {
+			log.error("An HttpStatusCodeException was thrown calling the /customer web service method. HTTP status code: " + sce.getRawStatusCode());
+			log.error("ErrorResponse for HttpStatusCodeException: " + sce.getResponseBodyAsString());
+			throw new ClientException("HttpStatusCodeException caught after call to /customer web service method. HTTP status code: " + sce.getRawStatusCode(), sce);			
+		} catch (RestClientException rce) {
+			log.error("A RestClientException was thrown calling the /customer web service method.");
+			throw new ClientException("RestClientException caught after call to /customer web service method.", rce);					
+		}
+		return response.getCustomer();
+	}
+	
 }
