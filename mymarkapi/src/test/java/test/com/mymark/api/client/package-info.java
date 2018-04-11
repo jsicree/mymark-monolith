@@ -5,4 +5,4 @@
  * @author joseph_sicree
  *
  */
-package com.mymark.ws.client;
+package test.com.mymark.api.client;
