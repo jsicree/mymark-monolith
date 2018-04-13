@@ -69,7 +69,7 @@ public class CustomerRestClient {
 		} catch (HttpStatusCodeException sce) {
 			log.error("An HttpStatusCodeException was thrown calling the /customer web service method. HTTP status code: " + sce.getRawStatusCode());
 			log.error("ErrorResponse for HttpStatusCodeException: " + sce.getResponseBodyAsString());
-			throw new ClientException("HttpStatusCodeException caught after call to /customer web service method. HTTP status code: " + sce.getRawStatusCode(), sce);			
+ 			throw new ClientException(sce.getResponseBodyAsString(), sce, sce.getRawStatusCode());			
 		} catch (RestClientException rce) {
 			log.error("A RestClientException was thrown calling the /customer web service method.");
 			throw new ClientException("RestClientException caught after call to /customer web service method.", rce);					
