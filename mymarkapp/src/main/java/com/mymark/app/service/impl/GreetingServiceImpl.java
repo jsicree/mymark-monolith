@@ -26,49 +26,50 @@ public class GreetingServiceImpl implements GreetingService {
 	@Autowired
 	private GreetingRepository greetingRepo;
 	
-	private static final String DEFAULT_MESSAGE = "Hi";
-
-	/**
-	 * 
-	 */
 	public GreetingServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see com.mymark.app.service.HelloService#sayHello()
-	 */
+	public GreetingServiceImpl(GreetingRepository greetingRepo) {
+		this.greetingRepo = greetingRepo;
+	}
+	
 	public String sayHello() throws ServiceException {
 
+		return sayHello(Language.ENG) ;
+	}
+
+	public String sayHello(String name) throws ServiceException {
+		return sayHello(Language.ENG, name) ;
+	}
+
+	public String sayHello(Language language) throws ServiceException {
 		String message = null;
 		
-		Greeting greeting = greetingRepo.findByLanguage(Language.ENG);
+		Greeting greeting = greetingRepo.findByLanguage(language);
 		if (greeting != null) {
 			message = greeting.getSimpleMessage();
 		} else {
-			message = GreetingServiceImpl.DEFAULT_MESSAGE;
+			throw new ServiceException("No greeting found for language " + language);
 		}
 		return message ;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.mymark.app.service.HelloService#sayHello(java.lang.String)
-	 */
-	public String sayHello(String name) throws ServiceException {
+	public String sayHello(Language language, String name) throws ServiceException {
 		String message = null;
 
 		if (name != null) {
-			Greeting greeting = greetingRepo.findByLanguage(Language.ENG);
+			Greeting greeting = greetingRepo.findByLanguage(language);
 			if (greeting != null) {
 				String namedMessage = greeting.getNamedMessage();
 				Map<String,String> map = new HashMap<String,String>();
 				map.put("name", name);
 				message = StrSubstitutor.replace(namedMessage, map,"{","}");
 			} else {
-				message = GreetingServiceImpl.DEFAULT_MESSAGE;
+				throw new ServiceException("No greeting found for language " + language);
 			}			
 		} else {
-			message = sayHello();
+			message = sayHello(language);
 		}
 
 		return message;

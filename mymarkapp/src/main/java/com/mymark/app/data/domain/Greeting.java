@@ -32,6 +32,14 @@ public class Greeting {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Greeting(Long id, Language language, String simpleMessage, String namedMessage) {
+		super();
+		this.id = id;
+		this.language = language;
+		this.simpleMessage = simpleMessage;
+		this.namedMessage = namedMessage;
+	}
+	
 	public Long getId() {
 		return id;
 	}
