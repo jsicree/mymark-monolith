@@ -5,6 +5,7 @@ package test.com.mymark.app.service;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -14,7 +15,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.mymark.app.config.MyMarkAppConfig;
-import com.mymark.app.data.domain.Credential;
 import com.mymark.app.data.domain.Customer;
 import com.mymark.app.service.CredentialService;
 import com.mymark.app.service.CustomerService;
@@ -24,6 +24,7 @@ import com.mymark.app.service.ServiceException;
  * @author Joseph Sicree
  *
  */
+@Ignore
 @RunWith(JUnit4.class)
 public class CredentialServiceTest {
 
@@ -50,6 +51,7 @@ public class CredentialServiceTest {
 		addCustomers();
 	}
 
+	@Ignore
 	@Test
 	public void createCredentials() {
 
@@ -81,7 +83,7 @@ public class CredentialServiceTest {
 				Customer c = customerService.lookupCustomerByUserName(customerData[x][2]);
 				if (c == null) {
 					customerService.createNewCustomer(customerData[x][0], customerData[x][1], customerData[x][2],
-							customerData[x][3]);
+							customerData[x][3], customerData[x][4]);
 				}
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block

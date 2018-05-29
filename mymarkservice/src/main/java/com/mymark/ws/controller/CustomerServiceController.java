@@ -39,9 +39,6 @@ public class CustomerServiceController {
 
 	@Autowired
 	protected CustomerService customerService;
-
-	@Autowired
-	protected CredentialService credentialService;
 	
 	@Autowired
 	protected MessageSource messageSource;
@@ -70,23 +67,11 @@ public class CustomerServiceController {
 		
 		log.info("In createNewCustomer...");
 		
-		log.debug("++NewCustomerRequest++");
-		log.debug("First Name:" + request.getFirstName());
-		log.debug("Last Name:" + request.getLastName());
-		log.debug("User Name:" + request.getUserName());
-		log.debug("Email:" + request.getEmail());
-		log.debug("--NewCustomerRequest--");
-
 		Customer newCustomer;
 		try {
-			newCustomer = customerService.createNewCustomer(request.getFirstName(), request.getLastName(), request.getUserName(), request.getEmail());
-			if (newCustomer != null) {
-				Boolean isCredentialCreated = credentialService.addCredential(newCustomer.getId(), request.getPassword());				
-				if (isCredentialCreated) {
-					CustomerDto dto = DTOConverter.toCustomerDto(newCustomer);
-					response.setCustomer(dto);
-				}
-			}
+			newCustomer = customerService.createNewCustomer(request.getFirstName(), request.getLastName(), request.getUserName(), request.getEmail(), request.getPassword());
+			CustomerDto dto = DTOConverter.toCustomerDto(newCustomer);
+			response.setCustomer(dto);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,6 +80,31 @@ public class CustomerServiceController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+	
+	@RequestMapping(value = "/customer/{userName}", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<CustomerResponse> getCustomerByUserName(
+			@PathVariable(required = true) String userName) throws ApiException {
+		
+		
+		log.info("In getCustomerByUserName...");
+		log.debug("Fetching customer: " + userName);
+		
+		CustomerResponse response = new CustomerResponse();
+
+		try {
+			Customer customer = customerService.lookupCustomerByUserName(userName);
+			if (customer != null) {
+				response.setCustomer(DTOConverter.toCustomerDto(customer));
+			}
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(response, HttpStatus.OK);
+		
+	}
+	
+	
 	@RequestMapping(value = "/customer/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public ResponseEntity<?> deleteCustomer(
 			@PathVariable(required = true) Long id) throws ApiException {
@@ -103,14 +113,11 @@ public class CustomerServiceController {
 		log.info("In deleteCustomer...");
 		log.debug("Deleting customer: " + id);
 		
-		CustomerResponse response = new CustomerResponse();
-
 		try {
 			Customer customer = customerService.lookupCustomerById(id);
 			if (customer != null) {
-				credentialService.removeCredential(customer.getId());
+//				credentialService.removeCredential(customer.getId());
 				customerService.deleteCustomer(customer.getId());
-				response.setCustomer(DTOConverter.toCustomerDto(customer));
 			}
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block

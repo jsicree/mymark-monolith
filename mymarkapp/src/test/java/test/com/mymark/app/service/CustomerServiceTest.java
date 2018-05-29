@@ -33,6 +33,8 @@ public class CustomerServiceTest {
 	public static String[][] newCustomerData = { { "John", "Cleese", "lancelot", "lancelot@foo.com" },
 			{ "Eric", "Idle", "robin", "robin@foo.com" } };
 
+	public static String DEFAULT_PASSWORD = "password";
+	
 	protected final static Logger log = LoggerFactory.getLogger(CustomerServiceTest.class);
 
 	private static CustomerService customerService;
@@ -52,11 +54,14 @@ public class CustomerServiceTest {
 	@Test
 	public void createNewCustomer() {
 
+		log.info("Running test: createNewCustomer");
+
 		try {
 
 			for (int x = 0; x < newCustomerData.length; x++) {
-				Customer customer = customerService.createNewCustomer(newCustomerData[x][0], newCustomerData[x][1],
-						newCustomerData[x][2], newCustomerData[x][3]);
+				Customer customer = customerService.createNewCustomer(newCustomerData[x][0], 
+						newCustomerData[x][1], newCustomerData[x][2], 
+						newCustomerData[x][3], DEFAULT_PASSWORD);
 				org.junit.Assert.assertNotNull("CreateNewCustomer has returned null.", customer);
 				log.debug("CreateNewCustomer has returned: " + customer);
 			}
@@ -69,6 +74,7 @@ public class CustomerServiceTest {
 	@Test
 	public void lookupCustomerByEmail() {
 
+		log.info("Running test: lookupCustomerByEmail");
 		try {
 
 			for (int x = 0; x < customerData.length; x++) {
@@ -85,6 +91,7 @@ public class CustomerServiceTest {
 	@Test
 	public void lookupCustomerByUserName() {
 
+		log.info("Running test: lookupCustomerByUserName");
 		try {
 
 			for (int x = 0; x < customerData.length; x++) {
@@ -129,7 +136,7 @@ public class CustomerServiceTest {
 				Customer c = customerService.lookupCustomerByUserName(customerData[x][2]);
 				if (c == null) {
 					customerService.createNewCustomer(customerData[x][0], customerData[x][1], customerData[x][2],
-							customerData[x][3]);
+							customerData[x][3], DEFAULT_PASSWORD);
 				}
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block

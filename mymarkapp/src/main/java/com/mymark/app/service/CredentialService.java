@@ -4,6 +4,7 @@ package com.mymark.app.service;
  * @author joseph_sicree
  *
  */
+@Deprecated
 public interface CredentialService {
 
 	public Boolean isPasswordValid(String password) throws ServiceException;

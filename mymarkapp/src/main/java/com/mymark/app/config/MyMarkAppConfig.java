@@ -23,6 +23,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 //
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -46,6 +47,7 @@ import com.mymark.app.service.impl.GreetingServiceImpl;
  */
 @Configuration
 @EnableJpaRepositories(basePackages = { "com.mymark.app.jpa.repository" })
+@EnableTransactionManagement
 @PropertySource({ "classpath:mymarkapp.properties" })
 //@IntegrationComponentScan("com.mymark.app.integration")
 //@EnableIntegration
@@ -128,7 +130,7 @@ public class MyMarkAppConfig {
 			EntityManagerFactory entityManagerFactory) {
 		return new JpaTransactionManager(entityManagerFactory);
 	}
-
+	
 	@Bean
     public CacheManager cacheManager() {
         // configure and return an implementation of Spring's CacheManager SPI

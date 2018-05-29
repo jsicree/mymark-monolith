@@ -22,6 +22,7 @@ public class CredentialServiceImpl implements CredentialService {
 	/**
 	 * 
 	 */
+	@Deprecated
 	public CredentialServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
