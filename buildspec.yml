@@ -12,4 +12,5 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn -X -f mymarkapi/pom.xml install
+      - mvn -X -f mymarkapp/pom.xml install
       
