@@ -1,9 +1,5 @@
 version: 0.2
 
-environment_variables:
-  plaintext:
-    JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
-
 phases:
   install:
     commands:
@@ -15,10 +11,5 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Building mymarkapi
-      - mvn -f mymarkapi/pom.xml install
-      - echo Building mymarkapp
-      - mvn -f mymarkapp/pom.xml install
-      - echo Building mymarkservice
-      - mvn -f mymarkservice/pom.xml install
+      - mvn -X -f mymarkapi/pom.xml install
       
