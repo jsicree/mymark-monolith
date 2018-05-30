@@ -1,4 +1,4 @@
-version: 0.1
+version: 0.2
 
 environment_variables:
   plaintext:
@@ -10,14 +10,10 @@ phases:
       - sudo update-ca-certificates -f
   pre_build:
     commands:
-      - echo Nothing to do in the pre_build phase...
+      - echo Running maven clean
       - mvn -X -f mymarkall/pom.xml clean
   build:
     commands:
       - echo Build started on `date`
       - mvn -f mymarkall/pom.xml install
-  post_build:
-    commands:
-
-artifacts:
-  files:
+      
