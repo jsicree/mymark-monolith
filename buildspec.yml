@@ -1,0 +1,23 @@
+version: 0.1
+
+environment_variables:
+  plaintext:
+    JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
+
+phases:
+  install:
+    commands:
+      - sudo update-ca-certificates -f
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
+      - mvn -X -f mymarkall/pom.xml clean
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn -f mymarkall/pom.xml install
+  post_build:
+    commands:
+
+artifacts:
+  files:
