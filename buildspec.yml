@@ -15,5 +15,10 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - mvn -f mymarkall/pom.xml install
+      - echo Building mymarkapi
+      - mvn -f mymarkapi/pom.xml install
+      - echo Building mymarkapp
+      - mvn -f mymarkapp/pom.xml install
+      - echo Building mymarkservice
+      - mvn -f mymarkservice/pom.xml install
       
