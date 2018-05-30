@@ -10,7 +10,7 @@ phases:
       - mvn -f mymarkall/pom.xml clean
   build:
     commands:
-      - echo Build started on `date`
+      - echo Build started
       - mvn -f mymarkapi/pom.xml install
       - mvn -f mymarkapp/pom.xml install
       - mvn -f mymarkservice/pom.xml install
@@ -18,7 +18,7 @@ phases:
   post_build:
     commands:
       - mv mymarkservice/target/mymarkservice.war mymarkservice.war
-      - echo Build completed on `date`
+      - echo Build completed
 
 artifacts:
   files:
