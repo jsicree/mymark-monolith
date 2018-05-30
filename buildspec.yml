@@ -15,3 +15,11 @@ phases:
       - mvn -f mymarkapp/pom.xml install
       - mvn -f mymarkservice/pom.xml install
       
+  post_build:
+    commands:
+      - mv mymarkservice/target/mymarkservice.war mymarkservice.war
+      - echo Build completed on `date`
+
+artifacts:
+  files:
+    - mymarkservice.war
