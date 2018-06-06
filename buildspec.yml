@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - sudo update-ca-certificates -f
+  pre_build:
+    commands:
+      - echo Running maven clean
+      - mvn -f mymarkall/pom.xml clean
+  build:
+    commands:
+      - echo Build started
+      - mvn -f mymarkapi/pom.xml install
+      - mvn -f mymarkapp/pom.xml install
+      - mvn -f mymarkservice/pom.xml install
+      
+  post_build:
+    commands:
+      - mv mymarkservice/target/mymarkservice.war mymarkservice.war
+      - echo Build completed!
+
+artifacts:
+  files:
+    - mymarkservice.war
