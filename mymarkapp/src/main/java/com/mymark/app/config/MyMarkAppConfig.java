@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
@@ -43,15 +44,12 @@ import com.mymark.app.service.impl.GreetingServiceImpl;
 @Configuration
 @EnableJpaRepositories(basePackages = { "com.mymark.app.jpa.repository" })
 @PropertySource({ "classpath:mymarkapp.properties" })
-//@IntegrationComponentScan("com.mymark.app.integration")
-//@EnableIntegration
-//@EnableCaching
 public class MyMarkAppConfig {
 
 	private static final String PROPERTY_NAME_DATABASE_DRIVER_CLASS = "db.driverClass";
-	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
-	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
-	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
+//	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
+//	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
+//	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
 
 	private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String PROPERTY_NAME_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
@@ -62,6 +60,14 @@ public class MyMarkAppConfig {
 	@Resource
 	private Environment environment;
 
+	@Value("${DB_URL}")
+	private String dbUrl;
+
+	@Value("${DB_USERNAME}")
+	private String dbUserName;
+	
+	@Value("${DB_PASSWORD}")
+	private String dbPassword;
 
 	@Bean
 	public ComboPooledDataSource dataSource() {
@@ -76,12 +82,20 @@ public class MyMarkAppConfig {
 			e.printStackTrace();
 		}
 
-		String url = environment.getRequiredProperty(PROPERTY_NAME_DATABASE_URL);		
-		ds.setJdbcUrl(url);		
-		ds.setUser(environment
-				.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
-		ds.setPassword(environment
-				.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
+		// Uncomment to read db url, username and password from properties file.		
+//		String url = environment.getRequiredProperty(PROPERTY_NAME_DATABASE_URL);		
+//		ds.setJdbcUrl(url);		
+//		ds.setUser(environment
+//				.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
+//		ds.setPassword(environment
+//				.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
+
+		// Read db url, username and password from environment.		
+		ds.setJdbcUrl(dbUrl);		
+		ds.setUser(dbUserName);
+		ds.setPassword(dbPassword);
+
+	
 		ds.setMinPoolSize(5);
 		ds.setMaxPoolSize(10);
 		return ds;
