@@ -3,8 +3,8 @@
  */
 package test.com.mymark.app.service;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+//import static org.mockito.Mockito.mock;
+//import static org.mockito.Mockito.when;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -13,13 +13,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
-import com.mymark.app.data.domain.Greeting;
+import com.mymark.app.config.MyMarkAppConfig;
 import com.mymark.app.data.reference.Language;
-import com.mymark.app.jpa.repository.GreetingRepository;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
-import com.mymark.app.service.impl.GreetingServiceImpl;
 
 /**
  * @author Joseph Sicree
@@ -35,33 +35,33 @@ public class GreetingServiceTest {
 	private static final String TEST_NAME = "John Doe";
 	
 	
-//	private static AbstractApplicationContext context;
+	private static AbstractApplicationContext context;
 	private static GreetingService greetingService;
-	private static GreetingRepository greetingRepoMock;
+//	private static GreetingRepository greetingRepoMock;
 
 	@SuppressWarnings("unchecked")
 	@BeforeClass
 	public static void setup() {
 
-//		context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);
-//		greetingService = (GreetingService) context.getBean("greetingService");
+		context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);
+		greetingService = (GreetingService) context.getBean("greetingService");
 		
-		log.info("GreetingServiceTest is using mock objects!");
-		greetingRepoMock = mock(GreetingRepository.class);
-		when(greetingRepoMock.findByLanguage(Language.ENG))
-		.thenReturn(new Greeting(1L, Language.ENG, MOCK_SIMPLE_MESSAGE, MOCK_NAMED_MESSAGE));
-		when(greetingRepoMock.findByLanguage(Language.FRA))
-		.thenReturn(new Greeting(1L, Language.FRA, MOCK_SIMPLE_MESSAGE, MOCK_NAMED_MESSAGE));
-		when(greetingRepoMock.findByLanguage(Language.UNK))
-		.thenThrow(ServiceException.class);		
-		greetingService = new GreetingServiceImpl(greetingRepoMock);
+//		log.info("GreetingServiceTest is using mock objects!");
+//		greetingRepoMock = mock(GreetingRepository.class);
+//		when(greetingRepoMock.findByLanguage(Language.ENG))
+//		.thenReturn(new Greeting(1L, Language.ENG, MOCK_SIMPLE_MESSAGE, MOCK_NAMED_MESSAGE));
+//		when(greetingRepoMock.findByLanguage(Language.FRA))
+//		.thenReturn(new Greeting(1L, Language.FRA, MOCK_SIMPLE_MESSAGE, MOCK_NAMED_MESSAGE));
+//		when(greetingRepoMock.findByLanguage(Language.UNK))
+//		.thenThrow(ServiceException.class);		
+//		greetingService = new GreetingServiceImpl(greetingRepoMock);
 	}
 
 	@AfterClass
 	public static void after() {
-//		if (context != null) {
-//			context.close();
-//		}
+		if (context != null) {
+			context.close();
+		}
 	}
 
 
