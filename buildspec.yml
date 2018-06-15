@@ -18,9 +18,8 @@ phases:
   post_build:
     commands:
       - mv mymarkservice/target/mymarkservice.war mymarkservice.war
-      - echo Build completed!
       - mkdir .ebextensions
-      - mv mymarkapi/.ebextensions/* .ebextensions/
+      - mv mymarkservice/.ebextensions/* .ebextensions/
 
 artifacts:
   files:
