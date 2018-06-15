@@ -19,7 +19,10 @@ phases:
     commands:
       - mv mymarkservice/target/mymarkservice.war mymarkservice.war
       - echo Build completed!
+      - mkdir .ebextensions
+      - mv mymarkapi/.ebextensions/* .ebextensions/
 
 artifacts:
   files:
     - mymarkservice.war
+    - .ebextensions/**/*
