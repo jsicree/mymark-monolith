@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.mymark.app.data.reference.Language;
+import com.mymark.app.data.enums.Language;
 
 @Entity(name="GREETING")
 public class Greeting {

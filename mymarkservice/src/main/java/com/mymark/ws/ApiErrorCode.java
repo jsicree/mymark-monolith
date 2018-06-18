@@ -1,14 +1,13 @@
 package com.mymark.ws;
 
 public enum ApiErrorCode {
-	ACCESS_DENIED("AccessDenied"),
-	CUSTOMER_DOES_NOT_EXIST("CustomerDoesNotExist"),
 	INVALID_VALUE("InvalidValue"),
 	NULL_OR_EMPTY_VALUE("NullOrEmptyValue"),
-	SERVICE_EXCEPTION("ApiException"),
-	UNKNOWN_COUNTRY_CODE("UnknownCountryCode"), 
-	UNKNOWN_STATE_CODE("UnknownStateCode"), 
-	USERNAME_EXISTS("UserNameExists");
+	API_EXCEPTION("ApiException"),
+	ILLEGAL_ARGUMENT_EXCEPTION("IllegalArgumentException"), 
+	USERNAME_EXISTS("UserNameExists"), 
+	EMAIL_EXISTS("EmailExists"), 
+	SERVICE_EXCEPTION("ServiceException");
 	
 	private String code;
 	

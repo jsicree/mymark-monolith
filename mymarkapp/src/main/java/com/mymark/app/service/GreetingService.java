@@ -3,7 +3,7 @@
  */
 package com.mymark.app.service;
 
-import com.mymark.app.data.reference.Language;
+import com.mymark.app.data.enums.Language;
 
 /**
  * @author joseph_sicree

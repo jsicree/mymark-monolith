@@ -24,10 +24,13 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-
-//
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mymark.app.service.CredentialService;
+import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.GreetingService;
+import com.mymark.app.service.impl.CredentialServiceImpl;
+import com.mymark.app.service.impl.CustomerServiceImpl;
 import com.mymark.app.service.impl.GreetingServiceImpl;
 
 
@@ -43,7 +46,9 @@ import com.mymark.app.service.impl.GreetingServiceImpl;
  */
 @Configuration
 @EnableJpaRepositories(basePackages = { "com.mymark.app.jpa.repository" })
+@EnableTransactionManagement
 @PropertySource({ "classpath:mymarkapp.properties" })
+@EnableCaching
 public class MyMarkAppConfig {
 
 	private static final String PROPERTY_NAME_DATABASE_DRIVER_CLASS = "db.driverClass";
@@ -138,22 +143,31 @@ public class MyMarkAppConfig {
 			EntityManagerFactory entityManagerFactory) {
 		return new JpaTransactionManager(entityManagerFactory);
 	}
-
-//	@Bean
-//    public CacheManager cacheManager() {
-//        // configure and return an implementation of Spring's CacheManager SPI
-//        SimpleCacheManager cacheManager = new SimpleCacheManager();
-//        ArrayList<ConcurrentMapCache> cacheList = new ArrayList<ConcurrentMapCache>();
-//        cacheList.add(new ConcurrentMapCache("joe.spring.springapp.data.countries"));
-//        cacheList.add(new ConcurrentMapCache("joe.spring.springapp.data.states"));        
-//        cacheManager.setCaches(cacheList);
-//        return cacheManager;
-//    }	
+	
+	@Bean
+    public CacheManager cacheManager() {
+        // configure and return an implementation of Spring's CacheManager SPI
+        SimpleCacheManager cacheManager = new SimpleCacheManager();
+        ArrayList<ConcurrentMapCache> cacheList = new ArrayList<ConcurrentMapCache>();
+        cacheList.add(new ConcurrentMapCache("com.mymark.app.data.reference.countries"));
+        cacheList.add(new ConcurrentMapCache("com.mymark.app.data.reference.states"));        
+        cacheManager.setCaches(cacheList);
+        return cacheManager;
+    }	
 		
 	@Bean
 	public GreetingService greetingService() {
 		return new GreetingServiceImpl();
 	}
 	
+	@Bean
+	public CustomerService customerService() {
+		return new CustomerServiceImpl();
+	}
+
+	@Bean
+	public CredentialService credentialService() {
+		return new CredentialServiceImpl();
+	}
 	
 }

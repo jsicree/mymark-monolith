@@ -39,6 +39,9 @@
 		<!-- Maven Javadoc Plugin -->
 		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
 
+		<!-- Maven Jar Plugin -->
+		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+
 	</properties>
 	<dependencies>
 	
@@ -171,9 +174,9 @@
 			<groupId>com.mymark</groupId>
 			<artifactId>mymarkapi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		
+		</dependency>		
 	</dependencies>	
+
 	<repositories>
 	    <repository>
 	        <id>spring-libs-release</id>
@@ -193,8 +196,19 @@
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>${maven-javadoc-plugin.version}</version>
 				</plugin>
+				<plugin>
+			        <groupId>org.apache.maven.plugins</groupId>
+			        <artifactId>maven-jar-plugin</artifactId>
+			        <version>${maven-jar-plugin.version}</version>
+<!--
+ 			        <configuration>
+			          <excludes>
+			            <exclude>**/mymarkapp.properties</exclude>
+			          </excludes>
+			        </configuration>
+-->
+			    </plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
-
 </project>

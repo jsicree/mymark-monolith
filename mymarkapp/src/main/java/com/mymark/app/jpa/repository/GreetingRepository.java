@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.mymark.app.data.domain.Greeting;
-import com.mymark.app.data.reference.Language;
+import com.mymark.app.data.enums.Language;
 
 /**
  * Repository to manage {@link Greeting} instances.

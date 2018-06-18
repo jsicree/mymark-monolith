@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mymark.app.data.domain.Greeting;
-import com.mymark.app.data.reference.Language;
+import com.mymark.app.data.enums.Language;
 import com.mymark.app.jpa.repository.GreetingRepository;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ServiceException;
@@ -33,8 +33,7 @@ public class GreetingServiceTest {
 	private static final String MOCK_SIMPLE_MESSAGE = "Mock Simple Message";
 	private static final String MOCK_NAMED_MESSAGE = "Mock Message for John Doe";
 	private static final String TEST_NAME = "John Doe";
-	
-	
+
 //	private static AbstractApplicationContext context;
 	private static GreetingService greetingService;
 	private static GreetingRepository greetingRepoMock;
@@ -43,27 +42,25 @@ public class GreetingServiceTest {
 	@BeforeClass
 	public static void setup() {
 
-//		context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);
-//		greetingService = (GreetingService) context.getBean("greetingService");
-		
+//		 context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);
+//		 greetingService = (GreetingService) context.getBean("greetingService");
+
 		log.info("GreetingServiceTest is using mock objects!");
 		greetingRepoMock = mock(GreetingRepository.class);
 		when(greetingRepoMock.findByLanguage(Language.ENG))
-		.thenReturn(new Greeting(1L, Language.ENG, MOCK_SIMPLE_MESSAGE, MOCK_NAMED_MESSAGE));
+				.thenReturn(new Greeting(1L, Language.ENG, MOCK_SIMPLE_MESSAGE, MOCK_NAMED_MESSAGE));
 		when(greetingRepoMock.findByLanguage(Language.FRA))
-		.thenReturn(new Greeting(1L, Language.FRA, MOCK_SIMPLE_MESSAGE, MOCK_NAMED_MESSAGE));
-		when(greetingRepoMock.findByLanguage(Language.UNK))
-		.thenThrow(ServiceException.class);		
+				.thenReturn(new Greeting(1L, Language.FRA, MOCK_SIMPLE_MESSAGE, MOCK_NAMED_MESSAGE));
+		when(greetingRepoMock.findByLanguage(Language.UNK)).thenThrow(ServiceException.class);
 		greetingService = new GreetingServiceImpl(greetingRepoMock);
 	}
 
 	@AfterClass
 	public static void after() {
-//		if (context != null) {
-//			context.close();
-//		}
+		// if (context != null) {
+		// context.close();
+		// }
 	}
-
 
 	@Test
 	public void sayHello() {
@@ -114,7 +111,7 @@ public class GreetingServiceTest {
 		try {
 			String message = greetingService.sayHello(TEST_NAME);
 			org.junit.Assert.assertNotNull("SayHello(name) has returned null.", message);
-			//log.debug("SayHello(name) has returned: " + message);
+			// log.debug("SayHello(name) has returned: " + message);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,12 +126,13 @@ public class GreetingServiceTest {
 		try {
 			String message = greetingService.sayHello(Language.FRA, TEST_NAME);
 			org.junit.Assert.assertNotNull("SayHello(name) has returned null.", message);
-			//org.junit.Assert.assertEquals("SayHello(name) did not return the expected message.", MOCK_NAMED_MESSAGE, message);
+			// org.junit.Assert.assertEquals("SayHello(name) did not return the expected
+			// message.", MOCK_NAMED_MESSAGE, message);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void sayHelloByNameUnknownLanguage() {
 
@@ -147,6 +145,5 @@ public class GreetingServiceTest {
 		} catch (ServiceException e) {
 		}
 	}
-		
 
 }
