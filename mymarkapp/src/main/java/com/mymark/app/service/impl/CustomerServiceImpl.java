@@ -5,6 +5,8 @@ package com.mymark.app.service.impl;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +21,14 @@ import com.mymark.app.jpa.repository.CustomerRepository;
 import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.ServiceException;
 
+
 /**
  * @author joseph_sicree
  *
  */
 public class CustomerServiceImpl implements CustomerService {
+
+	protected final static Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
 	@Autowired
 	private CustomerRepository customerRepo;
@@ -40,6 +45,15 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
+
+
+	public CustomerServiceImpl(CustomerRepository customerRepo, CredentialRepository credRepo,
+			AccountRepository accountRepo) {
+		this.customerRepo = customerRepo;
+		this.credRepo = credRepo;
+		this.accountRepo = accountRepo;
+	}
+
 
 	/* (non-Javadoc)
 	 * @see com.mymark.app.service.CustomerService#createNewCustomer(java.lang.String, java.lang.String, java.lang.String, java.lang.String)

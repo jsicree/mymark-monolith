@@ -39,6 +39,13 @@ public class Account {
 		this.billingAddress = billingAddress;
 	}
 
+	public Account(Long id, AccountStatus status, Address billingAddress) {
+		super();
+		this.id = id;
+		this.status = status;
+		this.billingAddress = billingAddress;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -74,6 +81,40 @@ public class Account {
 		builder.append(billingAddress);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((billingAddress == null) ? 0 : billingAddress.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		if (billingAddress == null) {
+			if (other.billingAddress != null)
+				return false;
+		} else if (!billingAddress.equals(other.billingAddress))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
 	}
 	
 

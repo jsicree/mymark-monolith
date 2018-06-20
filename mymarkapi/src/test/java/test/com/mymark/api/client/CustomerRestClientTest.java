@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -14,6 +15,7 @@ import com.mymark.api.CustomerDto;
 import com.mymark.api.client.ClientException;
 import com.mymark.api.client.CustomerRestClient;
 
+@Ignore
 @RunWith(JUnit4.class)
 public class CustomerRestClientTest {
 
