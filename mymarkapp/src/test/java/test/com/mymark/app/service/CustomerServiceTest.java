@@ -52,8 +52,8 @@ public class CustomerServiceTest {
 	protected final static Customer NEW_CUSTOMER_INPUT = new Customer("new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT);
 	protected final static Customer NEW_CUSTOMER = new Customer(1L, "new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT);
 
-	protected final static Account SEARCH_CUSTOMER_ACCOUNT = new Account(1L,AccountStatus.NEW, null);
-	protected final static Customer SEARCH_CUSTOMER = new Customer(1L, "existing_user", "Existing", "User", "existingUser@foo.com", SEARCH_CUSTOMER_ACCOUNT);
+	protected final static Account SEARCH_CUSTOMER_ACCOUNT = new Account(2L,AccountStatus.NEW, null);
+	protected final static Customer SEARCH_CUSTOMER = new Customer(2L, "existing_user", "Existing", "User", "existingUser@foo.com", SEARCH_CUSTOMER_ACCOUNT);
 	
 	//private static AbstractApplicationContext context;
 	private static CustomerService customerService;
@@ -95,9 +95,17 @@ public class CustomerServiceTest {
 		thenReturn(NEW_CUSTOMER_CREDENTIAL);
 		
 		customerService = new CustomerServiceImpl(customerRepoMock, credentialRepoMock, accountRepoMock);
-		
-		
 	}
+	
+	@AfterClass
+	public static void after() {
+//		removeCustomers();
+//		removeNewCustomers();
+//		if (context != null) {
+//			context.close();
+//		}
+	}
+
 
 	@Test
 	public void createNewCustomerMock() {
@@ -202,15 +210,6 @@ public class CustomerServiceTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@AfterClass
-	public static void after() {
-//		removeCustomers();
-//		removeNewCustomers();
-//		if (context != null) {
-//			context.close();
-//		}
 	}
 
 	private static void removeNewCustomers() {
