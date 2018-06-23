@@ -1,0 +1,6 @@
+language: java
+jdk:
+  - oraclejdk8
+script: 
+  - mvn -f mymarkall/pom.xml clean compile
+  
