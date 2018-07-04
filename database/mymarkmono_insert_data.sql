@@ -2,11 +2,12 @@
 -- INSERT INTO greeting (simple_message, named_message, language) values ("Hello World in Spanish!","Hello {name} in Spanish!", "SPA");
 -- INSERT INTO greeting (simple_message, named_message, language) values ("Hello World in French!","Hello {name} in French!", "FRA");
 -- 
-
+-- COUNTRY ref data
 INSERT INTO COUNTRY (code, name) values ("CA", "Canada");
 INSERT INTO COUNTRY (code, name) values ("US", "United STATEs");
 INSERT INTO COUNTRY (code, name) values ("UK", "United Kingdom");
 
+-- STATE ref data
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Alabama","AL", (SELECT c.id from COUNTRY c where c.code="US"));
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Alaska","AK", (SELECT c.id from COUNTRY c where c.code="US"));
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Arizona","AZ", (SELECT c.id from COUNTRY c where c.code="US"));
@@ -59,3 +60,64 @@ INSERT INTO STATE (name, code, COUNTRY_id) values ("West Virginia","WV", (SELECT
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Wisconsin","WI", (SELECT c.id from COUNTRY c where c.code="US"));
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Wyoming","WY", (SELECT c.id from COUNTRY c where c.code="US"));
 
+-- Create Products
+INSERT INTO PRODUCT (product_code, name, price, short_desc) value ("PROD-001","Widget A", 19.99, "A simple widget");
+INSERT INTO PRODUCT (product_code, name, price, short_desc) value ("PROD-002","Widget B", 29.99, "An even better widget");
+
+-- Create Inventory
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
+
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
+
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"IN_PROCESS");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"IN_PROCESS");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"IN_PROCESS");
+
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"RETURNED");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"RETURNED");
+
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
+
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS");
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS");
+
+INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"RETURNED");

@@ -25,13 +25,16 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mymark.app.service.CredentialService;
 import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.GreetingService;
+import com.mymark.app.service.ProductService;
 import com.mymark.app.service.impl.CredentialServiceImpl;
 import com.mymark.app.service.impl.CustomerServiceImpl;
 import com.mymark.app.service.impl.GreetingServiceImpl;
+import com.mymark.app.service.impl.ProductServiceImpl;
 
 
 // import org.springframework.dao.QueryTimeoutException;
@@ -165,6 +168,11 @@ public class MyMarkAppConfig {
 		return new CustomerServiceImpl();
 	}
 
+	@Bean
+	public ProductService productService() {
+		return new ProductServiceImpl();
+	}
+	
 	@Bean
 	public CredentialService credentialService() {
 		return new CredentialServiceImpl();
