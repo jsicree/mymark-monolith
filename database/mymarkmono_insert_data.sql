@@ -61,8 +61,8 @@ INSERT INTO STATE (name, code, COUNTRY_id) values ("Wisconsin","WI", (SELECT c.i
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Wyoming","WY", (SELECT c.id from COUNTRY c where c.code="US"));
 
 -- Create Products
-INSERT INTO PRODUCT (product_code, name, price, short_desc) value ("PROD-001","Widget A", 19.99, "A simple widget");
-INSERT INTO PRODUCT (product_code, name, price, short_desc) value ("PROD-002","Widget B", 29.99, "An even better widget");
+INSERT INTO PRODUCT (product_code, name, price, short_desc, long_desc) value ("PROD-001","Widget A", 19.99, "A simple widget", "Lorem ipsum ipso facto.");
+INSERT INTO PRODUCT (product_code, name, price, short_desc, long_desc) value ("PROD-002","Widget B", 29.99, "An even better widget", "Lorem ipsum ipso facto.");
 
 -- Create Inventory
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");

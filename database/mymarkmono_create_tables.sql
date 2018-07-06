@@ -4,6 +4,9 @@
 -- drop table STATE;
 -- drop table COUNTRY;
 -- 
+-- drop table PRODUCT;
+-- drop table INVENTORY;
+
 
 CREATE TABLE `COUNTRY` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -73,6 +76,7 @@ CREATE TABLE `PRODUCT` (
   `PRICE` double NOT NULL,
   `NAME` varchar(80) NOT NULL,
   `SHORT_DESC` varchar(256) NOT NULL,
+  `LONG_DESC` varchar(512) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `PROD_CODE_UNIQUE` (`PRODUCT_CODE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

@@ -74,4 +74,20 @@ public class ProductServiceTest {
 		
 	}
 
+	@Test
+	public void getProductInventory() {
+
+		log.info("Running test: getProductInventory.");
+
+		try {
+			Long count = productService.getAvailableInventory("PROD-001");
+			org.junit.Assert.assertNotNull("getInventoryCountByProductCode returned null.", count);
+			log.info("PROD-001: " + count);
+			
+		} catch (ServiceException se) {
+			
+		}
+		
+	}
+
 }

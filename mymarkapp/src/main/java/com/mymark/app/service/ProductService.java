@@ -17,5 +17,7 @@ public interface ProductService {
 	public List<Product> getAllProducts() throws ServiceException;
 
 	public Product lookupProductById(Long id) throws ServiceException;
+	
+	public Long getAvailableInventory(String productCode) throws ServiceException;
 
 }
