@@ -2,16 +2,9 @@ package com.mymark.app.data.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-
-import com.mymark.app.data.enums.AccountStatus;
-import com.mymark.app.data.reference.State;
 
 @Entity(name="PRODUCT")
 public class Product {
@@ -34,6 +27,7 @@ public class Product {
 
 	@Column(name="LONG_DESC", nullable = false)
 	private String longDescription;
+
 	
 	public Product() {
 		super();

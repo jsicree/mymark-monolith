@@ -22,7 +22,6 @@ import com.mymark.api.NewCustomerRequest;
 public class CustomerRestClient {
 
 	private String customerUrl;
-
 	private RestTemplate restTemplate;
 	private HttpHeaders headers;
 

@@ -18,6 +18,6 @@ public interface ProductService {
 
 	public Product lookupProductById(Long id) throws ServiceException;
 	
-	public Long getAvailableInventory(String productCode) throws ServiceException;
+	public Long getAvailableInventory(Long id) throws ServiceException;
 
 }

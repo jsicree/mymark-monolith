@@ -76,18 +76,19 @@ INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p w
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
 
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD");
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD", '2017-05-10');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD", '2017-11-05');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD", '2018-01-21');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD", '2018-02-14');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD", '2018-03-01');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"SOLD", '2018-05-13');
 
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"IN_PROCESS");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"IN_PROCESS");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"IN_PROCESS");
+INSERT INTO INVENTORY (product_id, status, in_process_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"IN_PROCESS",'2018-04-05');
+INSERT INTO INVENTORY (product_id, status, in_process_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"IN_PROCESS",'2018-05-24');
+INSERT INTO INVENTORY (product_id, status, in_process_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"IN_PROCESS",'2018-06-10');
 
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"RETURNED");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"RETURNED");
+INSERT INTO INVENTORY (product_id, status, return_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"RETURNED", '2018-03-23');
+INSERT INTO INVENTORY (product_id, status, return_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"RETURNED", '2018-05-02');
 
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
@@ -105,19 +106,15 @@ INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p w
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"AVAILABLE");
 
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD");
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD", '2017-05-10');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD", '2018-01-09');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD", '2018-01-15');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD", '2017-02-03');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD", '2017-03-14');
+INSERT INTO INVENTORY (product_id, status, sell_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"SOLD", '2017-06-02');
 
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS");
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS");
+INSERT INTO INVENTORY (product_id, status, in_process_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS",'2018-06-05');
+INSERT INTO INVENTORY (product_id, status, in_process_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS",'2018-07-02');
+INSERT INTO INVENTORY (product_id, status, in_process_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS",'2018-07-05');
 
-INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"RETURNED");
+INSERT INTO INVENTORY (product_id, status, return_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"RETURNED", '2018-06-27');

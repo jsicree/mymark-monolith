@@ -65,10 +65,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Long getAvailableInventory(String productCode) throws ServiceException {
+	public Long getAvailableInventory(Long id) throws ServiceException {
 
-		Product p = productRepo.findByProductCode(productCode);
-		Long count = inventoryRepo.getAvailableInventory(p.getId());
+		Long count = null;
+		Optional<Product> p = productRepo.findById(id);
+		if (p.isPresent()) {
+			count = inventoryRepo.getAvailableInventory(p.get().getId());			
+		}
 		
 		return count;
 	}
