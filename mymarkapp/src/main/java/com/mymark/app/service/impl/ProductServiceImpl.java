@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
 	public Product lookupProductById(Long id) throws ServiceException {
 		Optional<Product> p = productRepo.findById(id);
 
-		if (p.isPresent()) {
+		if (p != null && p.isPresent()) {
 			return p.get();
 		} else {
 			return null;
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
 		Long count = null;
 		Optional<Product> p = productRepo.findById(id);
-		if (p.isPresent()) {
+		if (p != null && p.isPresent()) {
 			count = inventoryRepo.getAvailableInventory(p.get().getId());			
 		}
 		

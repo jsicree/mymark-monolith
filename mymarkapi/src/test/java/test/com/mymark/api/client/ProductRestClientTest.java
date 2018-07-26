@@ -43,7 +43,7 @@ public class ProductRestClientTest {
 			org.junit.Assert.assertNotNull("REST Client call to GET /products has returned null.", prodList);
 			log.info("REST Client GET to /products has returned: ");
 			for (ProductDto p : prodList) {
-				log.info("\t" + p.getName());
+				log.info("\t" + p.getName() + " (" + p.getProductCode() + "): " + p.getPrice());
 			}
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block

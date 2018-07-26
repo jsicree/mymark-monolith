@@ -3,8 +3,13 @@
  */
 package test.com.mymark.app.service;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -17,9 +22,17 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.mymark.app.config.MyMarkAppConfig;
+import com.mymark.app.data.domain.Credential;
+import com.mymark.app.data.domain.Customer;
 import com.mymark.app.data.domain.Product;
+import com.mymark.app.jpa.repository.CredentialRepository;
+import com.mymark.app.jpa.repository.CustomerRepository;
+import com.mymark.app.jpa.repository.InventoryItemRepository;
+import com.mymark.app.jpa.repository.ProductRepository;
 import com.mymark.app.service.ProductService;
 import com.mymark.app.service.ServiceException;
+import com.mymark.app.service.impl.CustomerServiceImpl;
+import com.mymark.app.service.impl.ProductServiceImpl;
 
 /**
  * @author Joseph Sicree
@@ -31,16 +44,52 @@ public class ProductServiceTest {
 	protected final static Logger log = LoggerFactory.getLogger(ProductServiceTest.class);
 
 	private static final Long BAD_PRODUCT_ID = 999999L;
+
+	private static final Boolean USE_MOCK = Boolean.TRUE;
 	
 	private static AbstractApplicationContext context;
 	private static ProductService productService;
 	
+	private static ProductRepository productRepoMock;
+	private static InventoryItemRepository inventoryRepoMock;
+
+	
 	@BeforeClass
 	public static void setup() {
+		if (!USE_MOCK) {
+			context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);
+			productService = (ProductService) context.getBean("productService");
+		} else {
+			mockSetup();
+		}
+	}
 
-		context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);
-		productService = (ProductService) context.getBean("productService");
+	public static void mockSetup() {
+
+		List<Product> productList = new ArrayList<Product>();		
+		productList.add(new Product(1L, "Test Product 1","TEST-PROD-01", 25.00, "Test Product 1 short desc.",
+				"Test Product 1 long desc."));
+		productList.add(new Product(2L, "Test Product 2","TEST-PROD-02", 19.99, "Test Product 2 short desc.",
+				"Test Product 2 long desc."));
+		productList.add(new Product(3L, "Test Product 3","TEST-PROD-03", 49.99, "Test Product 3 short desc.",
+				"Test Product 3 long desc."));
 		
+		
+		productRepoMock = mock(ProductRepository.class);
+		when(productRepoMock.findAll()).thenReturn(productList);
+		
+		when(productRepoMock.findById(productList.get(0).getId())).thenReturn(Optional.ofNullable(productList.get(0)));
+		when(productRepoMock.findById(productList.get(1).getId())).thenReturn(Optional.ofNullable(productList.get(1)));
+		when(productRepoMock.findById(productList.get(2).getId())).thenReturn(Optional.ofNullable(productList.get(2)));
+		when(productRepoMock.findById(BAD_PRODUCT_ID)).thenReturn(null);
+
+		inventoryRepoMock = mock(InventoryItemRepository.class);
+		when(inventoryRepoMock.getAvailableInventory(productList.get(0).getId())).thenReturn(10L);
+		when(inventoryRepoMock.getAvailableInventory(productList.get(1).getId())).thenReturn(20L);
+		when(inventoryRepoMock.getAvailableInventory(productList.get(2).getId())).thenReturn(30L);
+		when(inventoryRepoMock.getAvailableInventory(BAD_PRODUCT_ID)).thenReturn(null);
+
+		productService = new ProductServiceImpl(productRepoMock, inventoryRepoMock);
 	}
 	
 	@AfterClass
