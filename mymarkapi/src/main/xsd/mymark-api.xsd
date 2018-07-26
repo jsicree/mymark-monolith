@@ -83,7 +83,7 @@
 	<xs:element name="CustomerResponse">
 		<xs:complexType>
 			<xs:sequence>
-			<xs:element name="customer" type="tns:CustomerDto" />
+				<xs:element name="customer" type="tns:CustomerDto" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -93,6 +93,59 @@
 			<xs:sequence>
 			<xs:element name="customer" type="tns:CustomerDto" />
 			<xs:element name="account" type="tns:AccountDto" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:complexType name="ProductDto">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="productCode" type="xs:string" />
+			<xs:element name="price" type="xs:double" />
+			<xs:element name="shortDescription" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ProductDtoList">
+		<xs:sequence>
+			<xs:element name="products" type="tns:ProductDto" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ProductDetailsDto">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="productCode" type="xs:string" />
+			<xs:element name="price" type="xs:double" />
+			<xs:element name="shortDescription" type="xs:string" />
+			<xs:element name="longDescription" type="xs:string" />
+			<xs:element name="availableInventory" type="xs:long" />			
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="ProductsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="products" type="tns:ProductDtoList" />
+			</xs:sequence>
+		</xs:complexType>	
+	</xs:element>
+
+	<xs:element name="ProductDetailsRequest">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="productCode" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ProductDetailsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="productDetails" type="tns:ProductDetailsDto" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
