@@ -1,4 +1,4 @@
-package com.mymark.ws;
+package com.mymark.ws.config;
 
 import javax.annotation.Resource;
 
