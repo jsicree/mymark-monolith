@@ -2,6 +2,11 @@
 -- INSERT INTO greeting (simple_message, named_message, language) values ("Hello World in Spanish!","Hello {name} in Spanish!", "SPA");
 -- INSERT INTO greeting (simple_message, named_message, language) values ("Hello World in French!","Hello {name} in French!", "FRA");
 -- 
+
+-- SERVICE USER CREDENTIALS
+insert into USERS(username,password,enabled) values ('appuser','{noop}password',1);
+insert into AUTHORITIES(username,authority) values ('appuser','ROLE_WEBAPP');
+
 -- COUNTRY ref data
 INSERT INTO COUNTRY (code, name) values ("CA", "Canada");
 INSERT INTO COUNTRY (code, name) values ("US", "United STATEs");
