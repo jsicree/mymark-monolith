@@ -10,6 +10,7 @@
 		<module>../mymarkapi</module>
 		<module>../mymarkapp</module>
 		<module>../mymarkservice</module>
+		<module>../mymarkweb</module>
 	</modules>
 	<properties>
 		<!-- Maven Javadoc Plugin -->
