@@ -17,4 +17,5 @@
 .project
 .settings
 .metadata
+.recommenders
 RemoteSystemsTempFiles
