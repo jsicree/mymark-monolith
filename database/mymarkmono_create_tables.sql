@@ -1,15 +1,3 @@
--- drop table AUTHORITIES;
--- drop table USERS;
---
--- drop table CUSTOMER;
--- drop table ACCOUNT;
--- drop table ADDRESS;
--- drop table STATE;
--- drop table COUNTRY;
--- 
--- drop table PRODUCT;
--- drop table INVENTORY;
-
 CREATE TABLE `USERS` (
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
@@ -22,7 +10,7 @@ CREATE TABLE `AUTHORITIES` (
   `authority` varchar(50) NOT NULL,
   UNIQUE KEY `ix_auth_username` (`username`,`authority`),
   KEY `fk_authorities_users_idx` (`username`),
-  CONSTRAINT `fk_authorities_users` FOREIGN KEY (`username`) REFERENCES `USERS` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `USERS_FK` FOREIGN KEY (`username`) REFERENCES `USERS` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `COUNTRY` (
