@@ -22,7 +22,10 @@ public class CustomerRestClientTest {
 
 	protected final static Logger log = LoggerFactory.getLogger(CustomerRestClientTest.class);
 
-	public static String SERVICE_URL = "http://localhost:8080/mymarkservice/api/customer";
+	public static String SERVICE_URL = "http://localhost:8080/mymarkservice/api";
+	public static String USERNAME = "appuser";
+	public static String PASSWORD = "password";
+	
 //	public static String SERVICE_URL = "http://jrs-mymono-dev.us-east-1.elasticbeanstalk.com/api/customer";
 
 	public static String[][] customerData = { { "John", "Smith", "jsmith01", "jsmith01@foo.com", "password1234" },
@@ -47,7 +50,7 @@ public class CustomerRestClientTest {
 
 	@BeforeClass
 	public static void setup() {
-		client = new CustomerRestClient(SERVICE_URL);
+		client = new CustomerRestClient(SERVICE_URL, USERNAME, PASSWORD);
 	}
 
 	@Test
