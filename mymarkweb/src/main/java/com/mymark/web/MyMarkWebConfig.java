@@ -71,6 +71,13 @@ public class MyMarkWebConfig implements WebMvcConfigurer {
       registry.viewResolver(resolver);
    }   
    
+   @Override
+   public void addResourceHandlers(ResourceHandlerRegistry registry) {
+       registry.addResourceHandler(
+               "/css/**")
+               .addResourceLocations(
+                       "classpath:/static/css/");
+   }
 
 //	@Override
 //	public void addResourceHandlers(ResourceHandlerRegistry registry) {

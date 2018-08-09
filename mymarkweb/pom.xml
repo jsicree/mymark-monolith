@@ -18,6 +18,12 @@
 		<!-- JAXB -->
 		<jaxb-impl.version>2.3.0</jaxb-impl.version>
 
+		<!-- javax.el-api -->
+		<javax-el-api.version>3.0.1-b06</javax-el-api.version>
+		
+		<!-- javax.servlet.jsp.jstl-api -->
+		<javax-servlet-jsp-jstl.version>1.2.2</javax-servlet-jsp-jstl.version>
+		
 		<!-- Spring -->
 		<spring-framework.version>5.0.8.RELEASE</spring-framework.version>
 		<spring-security.version>5.0.7.RELEASE</spring-security.version>
@@ -124,7 +130,7 @@
 		<dependency>
 		    <groupId>javax.el</groupId>
 		    <artifactId>javax.el-api</artifactId>
-		    <version>3.0.1-b06</version>
+		    <version>${javax-el-api.version}</version>
 		</dependency>
 
 		<!-- Thymeleaf -->
@@ -181,7 +187,7 @@
 		<dependency>
 		    <groupId>javax.servlet.jsp.jstl</groupId>
 		    <artifactId>javax.servlet.jsp.jstl-api</artifactId>
-		    <version>1.2.2</version>
+		    <version>${javax-servlet-jsp-jstl.version}</version>
 		</dependency>
 		
 
