@@ -7,7 +7,8 @@ public enum ApiErrorCode {
 	ILLEGAL_ARGUMENT_EXCEPTION("IllegalArgumentException"), 
 	USERNAME_EXISTS("UserNameExists"), 
 	EMAIL_EXISTS("EmailExists"), 
-	SERVICE_EXCEPTION("ServiceException");
+	SERVICE_EXCEPTION("ServiceException"), 
+	ACCESS_DENIED_EXCEPTION("AccessDenied");
 	
 	private String code;
 	

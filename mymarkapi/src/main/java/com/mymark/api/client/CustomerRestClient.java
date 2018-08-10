@@ -17,54 +17,35 @@ import org.springframework.web.client.RestTemplate;
 import com.mymark.api.CustomerDto;
 import com.mymark.api.CustomerResponse;
 import com.mymark.api.NewCustomerRequest;
+import com.mymark.api.ProductsResponse;
 
 @Component
-public class CustomerRestClient {
+public class CustomerRestClient extends BaseRestClient {
 
-	private String customerUrl;
-	private RestTemplate restTemplate;
-	private HttpHeaders headers;
 
 	protected final static Logger log = LoggerFactory
 			.getLogger(CustomerRestClient.class);
-
 	
-	public CustomerRestClient() {
-		super();
-		restTemplate = new RestTemplate();
-		headers = new HttpHeaders();
-		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		
+	public CustomerRestClient(String url, String username, String password) {
+		super(url, username, password);        
 	}
-
-	public CustomerRestClient(String customerUrl) {
-		this();
-		this.customerUrl = customerUrl;
-	}
-
-	public String getCustomerUrl() {
-		return customerUrl;
-	}
-
-	public void setCustomerUrl(String customerUrl) {
-		this.customerUrl = customerUrl;
-	}
-
 	
 	public CustomerDto createNewCustomer(String firstName, String lastName, String userName, String email, String password) throws ClientException {
 
-		CustomerResponse response = new CustomerResponse();
-
-		NewCustomerRequest request = new NewCustomerRequest();
-		request.setFirstName(firstName);
-		request.setLastName(lastName);
-		request.setUserName(userName);
-		request.setEmail(email);
-		request.setPassword(password);
+		CustomerResponse response = null;
 
 		try {
-			HttpEntity<NewCustomerRequest> entity = new HttpEntity<NewCustomerRequest>(request, headers);
-			response = restTemplate.postForObject(customerUrl, entity, CustomerResponse.class);
+			
+	        HttpEntity<NewCustomerRequest> request = new HttpEntity<NewCustomerRequest>(new NewCustomerRequest(), getHeaders());
+	        request.getBody().setFirstName(firstName);
+	        request.getBody().setLastName(lastName);
+	        request.getBody().setUserName(userName);
+	        request.getBody().setEmail(email);
+	        request.getBody().setPassword(password);
+
+	        ResponseEntity<CustomerResponse> resp = getRestTemplate().exchange(getServiceUrl() + "/customer", HttpMethod.POST, request, CustomerResponse.class);
+	        response = resp.getBody();
+			
 		} catch (HttpStatusCodeException sce) {
 			log.error("An HttpStatusCodeException was thrown calling the /customer web service method. HTTP status code: " + sce.getRawStatusCode());
 			log.error("ErrorResponse for HttpStatusCodeException: " + sce.getResponseBodyAsString());
@@ -80,7 +61,9 @@ public class CustomerRestClient {
 
 		log.info("Deleting customer: " + id);
 		try {
-			restTemplate.delete(customerUrl + "/" + id);
+			HttpEntity<?> request = new HttpEntity<Object>(getHeaders());
+			getRestTemplate().exchange(getServiceUrl() + "/customer/" + id, HttpMethod.DELETE, request, String.class);			
+			
 			log.info("Customer deleted.");
 		} catch (HttpStatusCodeException sce) {
 			log.error("An HttpStatusCodeException was thrown calling the /customer web service method. HTTP status code: " + sce.getRawStatusCode());

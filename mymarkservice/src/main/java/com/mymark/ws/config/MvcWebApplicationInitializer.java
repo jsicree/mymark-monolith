@@ -1,4 +1,4 @@
-package com.mymark.ws;
+package com.mymark.ws.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -8,7 +8,7 @@ public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispat
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { MyMarkAppConfig.class };
+		return new Class[] { MyMarkAppConfig.class, MyMarkSecurityConfig.class };
 	}
 
 	@Override

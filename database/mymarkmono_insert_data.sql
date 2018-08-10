@@ -1,13 +1,14 @@
--- INSERT INTO greeting (simple_message, named_message, language) values ("Hello World!","Hello {name}!", "ENG");
--- INSERT INTO greeting (simple_message, named_message, language) values ("Hello World in Spanish!","Hello {name} in Spanish!", "SPA");
--- INSERT INTO greeting (simple_message, named_message, language) values ("Hello World in French!","Hello {name} in French!", "FRA");
--- 
--- COUNTRY ref data
+
+-- SERVICE USER CREDENTIALS
+insert into USERS(username,password,enabled) values ('appuser','{noop}password',1);
+insert into AUTHORITIES(username,authority) values ('appuser','ROLE_WEBAPP');
+
+-- COUNTRY REF DATA
 INSERT INTO COUNTRY (code, name) values ("CA", "Canada");
 INSERT INTO COUNTRY (code, name) values ("US", "United STATEs");
 INSERT INTO COUNTRY (code, name) values ("UK", "United Kingdom");
 
--- STATE ref data
+-- STATE REF DATA
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Alabama","AL", (SELECT c.id from COUNTRY c where c.code="US"));
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Alaska","AK", (SELECT c.id from COUNTRY c where c.code="US"));
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Arizona","AZ", (SELECT c.id from COUNTRY c where c.code="US"));
@@ -60,11 +61,11 @@ INSERT INTO STATE (name, code, COUNTRY_id) values ("West Virginia","WV", (SELECT
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Wisconsin","WI", (SELECT c.id from COUNTRY c where c.code="US"));
 INSERT INTO STATE (name, code, COUNTRY_id) values ("Wyoming","WY", (SELECT c.id from COUNTRY c where c.code="US"));
 
--- Create Products
+-- PRODUCTS
 INSERT INTO PRODUCT (product_code, name, price, short_desc, long_desc) value ("PROD-001","Widget A", 19.99, "A simple widget", "Lorem ipsum ipso facto.");
 INSERT INTO PRODUCT (product_code, name, price, short_desc, long_desc) value ("PROD-002","Widget B", 29.99, "An even better widget", "Lorem ipsum ipso facto.");
 
--- Create Inventory
+-- INVENTORY
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
 INSERT INTO INVENTORY (product_id, status) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-001"),"AVAILABLE");
@@ -118,3 +119,8 @@ INSERT INTO INVENTORY (product_id, status, in_process_date) values ((SELECT p.id
 INSERT INTO INVENTORY (product_id, status, in_process_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"IN_PROCESS",'2018-07-05');
 
 INSERT INTO INVENTORY (product_id, status, return_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"RETURNED", '2018-06-27');
+
+-- CUSTOMER and ACCOUNT
+INSERT INTO ACCOUNT (status) values ("New");
+INSERT INTO CUSTOMER (user_name, first_name, last_name, email, account_id) 
+	values ("firstUser", "FIRST", "USER", "first_user@foo.com", (SELECT a.id FROM ACCOUNT a LIMIT 1));

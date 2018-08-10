@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -23,6 +24,8 @@ public class ProductRestClientTest {
 	protected final static Logger log = LoggerFactory.getLogger(ProductRestClientTest.class);
 
 	public static String SERVICE_URL = "http://localhost:8080/mymarkservice/api";
+	public static String USERNAME = "appuser";
+	public static String PASSWORD = "password";
 //	public static String SERVICE_URL = "http://jrs-mymono-dev.us-east-1.elasticbeanstalk.com/api";
 
 
@@ -32,7 +35,7 @@ public class ProductRestClientTest {
 
 	@BeforeClass
 	public static void setup() {
-		client = new ProductRestClient(SERVICE_URL);
+		client = new ProductRestClient(SERVICE_URL, USERNAME, PASSWORD);
 	}
 
 	@Test
