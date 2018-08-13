@@ -3,8 +3,7 @@
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -13,14 +12,20 @@
 	crossorigin="anonymous">
 
 <!-- mymarkweb CSS -->
-<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/> -->
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
 
 <title>Hello, world!</title>
 </head>
 <body>
 <h1>Hello, world!</h1>
-
 <p th:text="${message}"></p>
+
+
+<div class="btn-group">
+    <button type="button" class="btn btn-success">This is a success button</button>
+    <button type="button" class="btn btn-warning">This is a warning button</button>
+    <button type="button" class="btn btn-danger">This is a danger button</button>
+</div>
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
