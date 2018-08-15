@@ -17,9 +17,27 @@
 <title>MyMark-Mono: Welcome!</title>
 </head>
 <body>
-<h1>Welcome to MyMark-Mono!</h1>
-<p th:text="${message}"></p>
+    <header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">MyMark - Mono</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
+    </header>
 
+    <!-- Begin page content -->
+    <main role="main" class="container">
+      <h2 class="mt-5">Welcome to MyMark-Mono</h2>
+      <p class="lead">MyMark-Mono is a simple web application implemented as a monolith. </p>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">&copy;2018 - Joe Sicree</span>
+      </div>
+    </footer>
 
 
 	<!-- Optional JavaScript -->
