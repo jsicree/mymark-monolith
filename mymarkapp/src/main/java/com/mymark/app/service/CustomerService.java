@@ -22,8 +22,6 @@ public interface CustomerService {
 
 	public Boolean isPasswordValid(String password) throws ServiceException;
 	
-	public Boolean checkCredentials(String userName, String password) throws ServiceException;
-	
 	public void deleteCustomer(Long id) throws ServiceException;
 
 }

@@ -5,6 +5,7 @@ package test.com.mymark.app.service;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -14,6 +15,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.mymark.app.config.MyMarkAppConfig;
+import com.mymark.app.data.domain.CartLineItem;
+import com.mymark.app.data.domain.Customer;
+import com.mymark.app.data.domain.Product;
+import com.mymark.app.data.domain.ShoppingCart;
+import com.mymark.app.service.CustomerService;
+import com.mymark.app.service.ProductService;
+import com.mymark.app.service.ServiceException;
+import com.mymark.app.service.ShoppingCartService;
 
 /**
  * @author Joseph Sicree
@@ -24,10 +33,12 @@ public class ShoppingCartServiceTest {
 
 	protected final static Logger log = LoggerFactory.getLogger(ShoppingCartServiceTest.class);
 
-	private static final Boolean USE_MOCK = Boolean.TRUE;
+	private static final Boolean USE_MOCK = Boolean.FALSE;
 	
 	private static AbstractApplicationContext context;
-//	private static ProductService productService;
+	private static CustomerService customerService;
+	private static ShoppingCartService shoppingCartService;
+	private static ProductService productService;
 //	
 //	private static ProductRepository productRepoMock;
 //	private static InventoryItemRepository inventoryRepoMock;
@@ -37,10 +48,24 @@ public class ShoppingCartServiceTest {
 	public static void setup() {
 		if (!USE_MOCK) {
 			context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);
-//			productService = (ProductService) context.getBean("productService");
+			customerService = (CustomerService) context.getBean("customerService");
+			shoppingCartService = (ShoppingCartService) context.getBean("shoppingCartService");
+			productService = (ProductService) context.getBean("productService");
 		} else {
 			mockSetup();
 		}
+		
+		try {
+			Customer c = customerService.lookupCustomerByUserName("cartTester");
+			if (c == null) {
+				c = customerService.createNewCustomer(
+						"John", "Doe", "cartTester", "cartTester@foo.com", "newpassword");
+								
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public static void mockSetup() {
@@ -74,28 +99,71 @@ public class ShoppingCartServiceTest {
 	@AfterClass
 	public static void after() {
 		if (context != null) {
+
+			try {
+				
+				Customer c = customerService.lookupCustomerByUserName("cartTester");
+				if (c != null) {
+					customerService.deleteCustomer(c.getId());
+				}
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			context.close();
 		}
 	}
-
-	@Test
-	public void viewShoppingCart() {
-
-		log.info("Running test: viewShoppingCart.");
-
-		org.junit.Assert.fail("Test viewShoppingCart not implemented");
-				
-	}
-
+	
 	@Test
 	public void addItemToShoppingCart() {
 
 		log.info("Running test: addItemToShoppingCart.");
 
-		org.junit.Assert.fail("Test addItemToShoppingCart not implemented");
+		try {
+			Customer c = customerService.lookupCustomerByUserName("cartTester");
+
+			ShoppingCart cart = shoppingCartService.createCartForCustomer(c.getId());
+			log.info(cart.toString());
+
+			Product p = productService.getAllProducts().get(0);
+			log.info(p.toString());
+			
+			shoppingCartService.addItemtoCart(cart.getId(), p.getId(), 2);
+			cart = shoppingCartService.getCart(cart.getId());
+			log.info(cart.toString());
+
+			shoppingCartService.removeAllItemsFromCart(cart.getId());
+			cart = shoppingCartService.getCart(cart.getId());
+			log.info(cart.toString());
+
+			shoppingCartService.addItemtoCart(cart.getId(), p.getId(), 2);
+			cart = shoppingCartService.getCart(cart.getId());
+			log.info(cart.toString());
+			
+			shoppingCartService.removeItemFromCart(cart.getId(), p.getId(), 1);
+			cart = shoppingCartService.getCart(cart.getId());
+			log.info(cart.toString());
+
+			shoppingCartService.removeItemFromCart(cart.getId(), p.getId(), 1);
+			cart = shoppingCartService.getCart(cart.getId());
+			log.info(cart.toString());
+
+			shoppingCartService.removeItemFromCart(cart.getId(), p.getId(), 1);
+			cart = shoppingCartService.getCart(cart.getId());
+			log.info(cart.toString());
+
+			shoppingCartService.deleteCart(cart.getId());
+
+			
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 				
 	}
 	
+	@Ignore
 	@Test
 	public void addUnknownItemToShoppingCart() {
 
@@ -105,6 +173,7 @@ public class ShoppingCartServiceTest {
 				
 	}
 
+	@Ignore
 	@Test
 	public void addUnavailableItemToShoppingCart() {
 
@@ -115,6 +184,7 @@ public class ShoppingCartServiceTest {
 	}
 	
 	
+	@Ignore
 	@Test
 	public void removeItemFromShoppingCart() {
 
@@ -124,6 +194,7 @@ public class ShoppingCartServiceTest {
 				
 	}
 	
+	@Ignore
 	@Test
 	public void removeUnknownItemFromShoppingCart() {
 

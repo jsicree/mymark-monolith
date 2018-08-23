@@ -68,6 +68,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
+
 	<xs:element name="NewCustomerRequest">
 		<xs:complexType>
 			<xs:sequence>
@@ -149,5 +150,46 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+
+	<xs:complexType name="CartLineItemDto">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="product" type="tns:ProductDto" />
+			<xs:element name="quantity" type="xs:long" />
+			<xs:element name="linePrice" type="xs:double" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CartLineItemDtoList">
+		<xs:sequence>
+			<xs:element name="lineItems" type="tns:CartLineItemDto" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ShoppingCartDto">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="userName" type="xs:string" />
+			<xs:element name="lineItems" type="tns:CartLineItemDtoList" />
+			<xs:element name="totalPrice" type="xs:double" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="ShoppingCartResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="cart" type="tns:ShoppingCartDto" />
+			</xs:sequence>
+		</xs:complexType>	
+	</xs:element>
+
+	<xs:element name="ShoppingCartRequest">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="userName" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
 
 </xs:schema>

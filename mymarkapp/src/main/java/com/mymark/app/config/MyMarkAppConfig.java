@@ -31,10 +31,12 @@ import com.mymark.app.service.CredentialService;
 import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.GreetingService;
 import com.mymark.app.service.ProductService;
+import com.mymark.app.service.ShoppingCartService;
 import com.mymark.app.service.impl.CredentialServiceImpl;
 import com.mymark.app.service.impl.CustomerServiceImpl;
 import com.mymark.app.service.impl.GreetingServiceImpl;
 import com.mymark.app.service.impl.ProductServiceImpl;
+import com.mymark.app.service.impl.ShoppingCartServiceImpl;
 
 
 // import org.springframework.dao.QueryTimeoutException;
@@ -171,6 +173,11 @@ public class MyMarkAppConfig {
 	@Bean
 	public ProductService productService() {
 		return new ProductServiceImpl();
+	}
+
+	@Bean
+	public ShoppingCartService shoppingCartService() {
+		return new ShoppingCartServiceImpl();
 	}
 	
 	@Bean

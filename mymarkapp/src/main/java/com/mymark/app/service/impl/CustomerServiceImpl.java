@@ -33,8 +33,8 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository customerRepo;
 
-	@Autowired
-	private CredentialRepository credRepo;
+//	@Autowired
+//	private CredentialRepository credRepo;
 	
 	@Autowired
 	private AccountRepository accountRepo;
@@ -47,10 +47,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 
-	public CustomerServiceImpl(CustomerRepository customerRepo, CredentialRepository credRepo,
-			AccountRepository accountRepo) {
+	public CustomerServiceImpl(CustomerRepository customerRepo, AccountRepository accountRepo) {
 		this.customerRepo = customerRepo;
-		this.credRepo = credRepo;
 		this.accountRepo = accountRepo;
 	}
 
@@ -77,10 +75,6 @@ public class CustomerServiceImpl implements CustomerService {
 		Account account = accountRepo.save(new Account(AccountStatus.NEW, null));
 		
 		Customer newCustomer = customerRepo.save(new Customer(userName, firstName, lastName, email, account));
-
-		if (newCustomer.getId() != null && !password.isEmpty()) {
-			credRepo.save(new Credential(newCustomer.getId(), password));
-		}
 		
 		return newCustomer;
 	}
@@ -108,30 +102,12 @@ public class CustomerServiceImpl implements CustomerService {
 		return isValid;
 	}
 
-	public Boolean checkCredentials(String userName, String password) throws ServiceException {
-		Boolean isOk = false;
-
-		Customer c = customerRepo.findByUserName(userName);
-		
-		if (c != null && !password.isEmpty()) {
-			Credential cred = credRepo.findByCustomerId(c.getId());
-			if (cred != null) {
-				if (password.equalsIgnoreCase(cred.getPassword())) {
-					isOk = true;
-				}
-			}
-		}
-		return isOk;
-	}
 	
 	public void deleteCustomer(Long id) throws ServiceException {
 
 		Optional<Customer> c = customerRepo.findById(id);
 
 		if (c.isPresent()) {
-			Credential cred = credRepo.findByCustomerId(id);
-			if (cred != null)
-				credRepo.delete(cred);			
 			customerRepo.deleteById(id);
 			Account a = c.get().getAccount();
 			if (a != null) {

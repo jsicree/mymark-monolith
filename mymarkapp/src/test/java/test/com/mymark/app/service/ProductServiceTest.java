@@ -45,7 +45,7 @@ public class ProductServiceTest {
 
 	private static final Long BAD_PRODUCT_ID = 999999L;
 
-	private static final Boolean USE_MOCK = Boolean.TRUE;
+	private static final Boolean USE_MOCK = Boolean.FALSE;
 	
 	private static AbstractApplicationContext context;
 	private static ProductService productService;
