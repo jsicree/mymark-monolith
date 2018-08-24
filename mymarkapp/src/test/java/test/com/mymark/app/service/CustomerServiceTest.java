@@ -16,12 +16,10 @@ import org.springframework.context.support.AbstractApplicationContext;
 
 import com.mymark.app.config.MyMarkAppConfig;
 import com.mymark.app.data.domain.Account;
-import com.mymark.app.data.domain.Credential;
 import com.mymark.app.data.domain.Customer;
 import com.mymark.app.data.domain.ShoppingCart;
 import com.mymark.app.data.enums.AccountStatus;
 import com.mymark.app.jpa.repository.AccountRepository;
-import com.mymark.app.jpa.repository.CredentialRepository;
 import com.mymark.app.jpa.repository.CustomerRepository;
 import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.ServiceException;
@@ -47,7 +45,6 @@ public class CustomerServiceTest {
 
 	protected final static Account NEW_CUSTOMER_ACCOUNT = new Account(1L,null,AccountStatus.NEW, null);
 	protected final static ShoppingCart NEW_CUSTOMER_CART = new ShoppingCart(1L, null);
-	protected final static Credential NEW_CUSTOMER_CREDENTIAL = new Credential(1L,"newpassword");
 	protected final static Customer NEW_CUSTOMER_INPUT = new Customer("new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT, NEW_CUSTOMER_CART);
 	protected final static Customer NEW_CUSTOMER = new Customer(1L, "new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT, NEW_CUSTOMER_CART);
 
@@ -60,7 +57,6 @@ public class CustomerServiceTest {
 
 	private static CustomerRepository customerRepoMock;
 	private static AccountRepository accountRepoMock;
-	private static CredentialRepository credentialRepoMock;
 
 	
 	@BeforeClass
@@ -73,8 +69,6 @@ public class CustomerServiceTest {
 		removeNewCustomers();
 		addCustomers();
 		
-//		accountRepoMock = mock(AccountRepository.class);
-//		when(accountRepoMock.save(NEW_CUSTOMER_ACCOUNT)).thenReturn(NEW_CUSTOMER_ACCOUNT);
 //
 //		customerRepoMock = mock(CustomerRepository.class);
 //		when(customerRepoMock.findByUserName(NEW_CUSTOMER.getUserName())).
@@ -90,7 +84,7 @@ public class CustomerServiceTest {
 //		when(customerRepoMock.findByUserName(SEARCH_CUSTOMER.getUserName())).
 //		thenReturn(SEARCH_CUSTOMER);
 //		
-//		customerService = new CustomerServiceImpl(customerRepoMock, accountRepoMock);
+//		customerService = new CustomerServiceImpl(customerRepoMock);
 	}
 	
 	@AfterClass

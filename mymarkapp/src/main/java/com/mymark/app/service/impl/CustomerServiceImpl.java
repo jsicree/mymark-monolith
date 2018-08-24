@@ -32,15 +32,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private CustomerRepository customerRepo;
-
-//	@Autowired
-//	private CredentialRepository credRepo;
-
-	@Autowired
-	private ShoppingCartRepository cartRepo;
-
-	@Autowired
-	private AccountRepository accountRepo;
 	
 	/**
 	 * 
@@ -50,9 +41,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 
-	public CustomerServiceImpl(CustomerRepository customerRepo, AccountRepository accountRepo) {
+	public CustomerServiceImpl(CustomerRepository customerRepo) {
 		this.customerRepo = customerRepo;
-		this.accountRepo = accountRepo;
 	}
 
 

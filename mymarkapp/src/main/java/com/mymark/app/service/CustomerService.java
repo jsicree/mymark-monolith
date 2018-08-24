@@ -19,8 +19,6 @@ public interface CustomerService {
 	public Customer lookupCustomerByUserName(String userName) throws ServiceException;
 
 	public Customer lookupCustomerByEmail(String email) throws ServiceException;
-
-	public Boolean isPasswordValid(String password) throws ServiceException;
 	
 	public void deleteCustomer(Long id) throws ServiceException;
 

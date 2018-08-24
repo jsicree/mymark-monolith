@@ -46,7 +46,7 @@ public class ShoppingCartServiceController {
 
 	}
 	
-	@RequestMapping(value = "/product/{username}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/cart/{username}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<ShoppingCartResponse> getCartByUserName(
 			@PathVariable(required = true) String username) throws ApiException {
 		

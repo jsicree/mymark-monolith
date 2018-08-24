@@ -24,7 +24,6 @@ import com.mymark.api.CustomerResponse;
 import com.mymark.api.NewCustomerRequest;
 import com.mymark.app.data.DTOConverter;
 import com.mymark.app.data.domain.Customer;
-import com.mymark.app.service.CredentialService;
 import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.ServiceException;
 import com.mymark.ws.ApiException;
