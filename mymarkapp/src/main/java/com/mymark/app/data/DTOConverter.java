@@ -6,8 +6,10 @@ import java.util.List;
 import com.mymark.api.CustomerDto;
 import com.mymark.api.ProductDetailsDto;
 import com.mymark.api.ProductDto;
+import com.mymark.api.ShoppingCartDto;
 import com.mymark.app.data.domain.Customer;
 import com.mymark.app.data.domain.Product;
+import com.mymark.app.data.domain.ShoppingCart;
 
 public final class DTOConverter {
 
@@ -51,6 +53,14 @@ public final class DTOConverter {
 			dto.setShortDescription(p.getShortDescription());
 			dto.setLongDescription(p.getLongDescription());
 			dto.setAvailableInventory(count);
+			return dto;
+		}
+
+		public static ShoppingCartDto toShoppingCartDto(ShoppingCart cart) {
+			ShoppingCartDto dto = new ShoppingCartDto();
+			dto.setId(cart.getId());
+			dto.setUserName(cart.getCustomer().getUserName());
+			dto.setTotalPrice(new Double(0.0));
 			return dto;
 		}	
 	

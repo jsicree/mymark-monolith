@@ -18,6 +18,7 @@ import com.mymark.app.config.MyMarkAppConfig;
 import com.mymark.app.data.domain.Account;
 import com.mymark.app.data.domain.Credential;
 import com.mymark.app.data.domain.Customer;
+import com.mymark.app.data.domain.ShoppingCart;
 import com.mymark.app.data.enums.AccountStatus;
 import com.mymark.app.jpa.repository.AccountRepository;
 import com.mymark.app.jpa.repository.CredentialRepository;
@@ -44,13 +45,15 @@ public class CustomerServiceTest {
 	
 	protected final static Logger log = LoggerFactory.getLogger(CustomerServiceTest.class);
 
-	protected final static Account NEW_CUSTOMER_ACCOUNT = new Account(1L,AccountStatus.NEW, null);
+	protected final static Account NEW_CUSTOMER_ACCOUNT = new Account(1L,null,AccountStatus.NEW, null);
+	protected final static ShoppingCart NEW_CUSTOMER_CART = new ShoppingCart(1L, null);
 	protected final static Credential NEW_CUSTOMER_CREDENTIAL = new Credential(1L,"newpassword");
-	protected final static Customer NEW_CUSTOMER_INPUT = new Customer("new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT);
-	protected final static Customer NEW_CUSTOMER = new Customer(1L, "new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT);
+	protected final static Customer NEW_CUSTOMER_INPUT = new Customer("new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT, NEW_CUSTOMER_CART);
+	protected final static Customer NEW_CUSTOMER = new Customer(1L, "new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT, NEW_CUSTOMER_CART);
 
-	protected final static Account SEARCH_CUSTOMER_ACCOUNT = new Account(2L,AccountStatus.NEW, null);
-	protected final static Customer SEARCH_CUSTOMER = new Customer(2L, "existing_user", "Existing", "User", "existingUser@foo.com", SEARCH_CUSTOMER_ACCOUNT);
+	protected final static Account SEARCH_CUSTOMER_ACCOUNT = new Account(2L,null, AccountStatus.NEW, null);
+	protected final static ShoppingCart SEARCH_CUSTOMER_CART = new ShoppingCart(2L, null);
+	protected final static Customer SEARCH_CUSTOMER = new Customer(2L, "existing_user", "Existing", "User", "existingUser@foo.com", SEARCH_CUSTOMER_ACCOUNT, SEARCH_CUSTOMER_CART);
 	
 	private static AbstractApplicationContext context;
 	private static CustomerService customerService;
@@ -92,11 +95,11 @@ public class CustomerServiceTest {
 	
 	@AfterClass
 	public static void after() {
-//		removeCustomers();
-//		removeNewCustomers();
-//		if (context != null) {
-//			context.close();
-//		}
+		removeCustomers();
+		removeNewCustomers();
+		if (context != null) {
+			context.close();
+		}
 	}
 
 	@Ignore

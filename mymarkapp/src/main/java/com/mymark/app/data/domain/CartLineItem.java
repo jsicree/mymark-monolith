@@ -92,7 +92,6 @@ public class CartLineItem {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
-		result = prime * result + ((shoppingCart == null) ? 0 : shoppingCart.hashCode());
 		return result;
 	}
 
@@ -119,11 +118,6 @@ public class CartLineItem {
 			if (other.quantity != null)
 				return false;
 		} else if (!quantity.equals(other.quantity))
-			return false;
-		if (shoppingCart == null) {
-			if (other.shoppingCart != null)
-				return false;
-		} else if (!shoppingCart.equals(other.shoppingCart))
 			return false;
 		return true;
 	}

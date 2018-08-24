@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mymark.app.data.domain.Account;
-import com.mymark.app.data.domain.Credential;
 import com.mymark.app.data.domain.Customer;
+import com.mymark.app.data.domain.ShoppingCart;
 import com.mymark.app.data.enums.AccountStatus;
 import com.mymark.app.jpa.repository.AccountRepository;
-import com.mymark.app.jpa.repository.CredentialRepository;
 import com.mymark.app.jpa.repository.CustomerRepository;
+import com.mymark.app.jpa.repository.ShoppingCartRepository;
 import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.ServiceException;
 
@@ -35,7 +35,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 //	@Autowired
 //	private CredentialRepository credRepo;
-	
+
+	@Autowired
+	private ShoppingCartRepository cartRepo;
+
 	@Autowired
 	private AccountRepository accountRepo;
 	
@@ -71,11 +74,21 @@ public class CustomerServiceImpl implements CustomerService {
 		if (existingCustomer != null) {
 			throw new ServiceException("A customer exists with the specified email " + email);
 		}
+
+		Customer newCustomer = new Customer(userName, firstName, lastName, email);
+
+		Account account = new Account(AccountStatus.NEW, null);
+
+		ShoppingCart cart = new ShoppingCart();
+
+		newCustomer.setAccount(account);
+		account.setCustomer(newCustomer);
 		
-		Account account = accountRepo.save(new Account(AccountStatus.NEW, null));
+		newCustomer.setShoppingCart(cart);
+		cart.setCustomer(newCustomer);
 		
-		Customer newCustomer = customerRepo.save(new Customer(userName, firstName, lastName, email, account));
-		
+		customerRepo.save(newCustomer);
+
 		return newCustomer;
 	}
 
@@ -108,11 +121,15 @@ public class CustomerServiceImpl implements CustomerService {
 		Optional<Customer> c = customerRepo.findById(id);
 
 		if (c.isPresent()) {
+//			ShoppingCart cart = cartRepo.findByCustomer(c.get());
+//			if (cart != null) {
+//				cartRepo.delete(cart);
+//			}
 			customerRepo.deleteById(id);
-			Account a = c.get().getAccount();
-			if (a != null) {
-				accountRepo.deleteById(a.getId());
-			}
+//			Account a = c.get().getAccount();
+//			if (a != null) {
+//				accountRepo.deleteById(a.getId());
+//			}
 		}
 	}
 

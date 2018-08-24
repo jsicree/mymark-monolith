@@ -15,6 +15,8 @@ public interface ShoppingCartService {
 
 	public ShoppingCart getCart(Long cartId) throws ServiceException;
 
+	public ShoppingCart getCartForCustomer(Long customerId) throws ServiceException;
+
 	public void addItemtoCart(Long cartId, Long productId, Integer amount) throws ServiceException;
 
 	public void removeItemFromCart(Long cartId, Long productId, Integer amount) throws ServiceException;
@@ -22,5 +24,6 @@ public interface ShoppingCartService {
 	public void removeAllItemsFromCart(Long cartId) throws ServiceException;
 
 	public void deleteCart(Long cartId) throws ServiceException;
+
 
 }

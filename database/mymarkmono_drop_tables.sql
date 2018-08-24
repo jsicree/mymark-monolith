@@ -3,6 +3,8 @@ SET SQL_SAFE_UPDATES = 0;
 delete from AUTHORITIES;
 delete from USERS;
 delete from ADDRESS; 
+delete from CART_LINE_ITEM;
+delete from SHOPPING_CART;
 delete from CUSTOMER; 
 delete from ACCOUNT; 
 delete from INVENTORY;

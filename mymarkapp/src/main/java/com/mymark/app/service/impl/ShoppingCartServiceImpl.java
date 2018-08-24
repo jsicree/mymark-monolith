@@ -53,7 +53,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		}
 		return cart;
 	}
+
+	@Override
+	public ShoppingCart getCartForCustomer(Long customerId) throws ServiceException {
+
+		ShoppingCart cart = null;
+
+		log.info("In ShoppingCartService.getCartForCustomer()");
 		
+		Customer c = customerRepo.getOne(customerId);
+		if (c != null) {
+			cart = shoppingCartRepo.findByCustomer(c);			
+		}
+		
+		return cart;
+	}
+	
 	@Override
 	public void addItemtoCart(Long cartId, Long productId, Integer amount) throws ServiceException {
 		log.info("In ShoppingCartService.addItemtoCart()");

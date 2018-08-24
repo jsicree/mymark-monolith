@@ -1,7 +1,6 @@
 package com.mymark.app.data.domain;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,8 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 
 @Entity(name = "SHOPPING_CART")
@@ -22,8 +21,9 @@ public class ShoppingCart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "CUSTOMER_ID")
+	
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
 	private Customer customer;
 
 	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "shoppingCart", orphanRemoval = true)
@@ -78,8 +78,6 @@ public class ShoppingCart {
         lineItems.remove(item);
         item.setShoppingCart(null);
     }
-
-    
     
 	@Override
 	public int hashCode() {
@@ -117,8 +115,6 @@ public class ShoppingCart {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ShoppingCart [id=");
 		builder.append(id);
-		builder.append(", customer=");
-		builder.append(customer);
 		builder.append(", lineItems=");
 		builder.append(lineItems);
 		builder.append("]");

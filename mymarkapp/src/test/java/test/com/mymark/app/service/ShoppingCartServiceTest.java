@@ -121,38 +121,47 @@ public class ShoppingCartServiceTest {
 
 		try {
 			Customer c = customerService.lookupCustomerByUserName("cartTester");
+			log.info("Before Add: " + c.getShoppingCart().toString());
 
-			ShoppingCart cart = shoppingCartService.createCartForCustomer(c.getId());
-			log.info(cart.toString());
+			ShoppingCart cart = shoppingCartService.getCartForCustomer(c.getId());
 
 			Product p = productService.getAllProducts().get(0);
 			log.info(p.toString());
+						
+			shoppingCartService.addItemtoCart(c.getShoppingCart().getId(), p.getId(), 2);
+			log.info("After Add: " + shoppingCartService.getCartForCustomer(c.getId()));
+//			c = customerService.lookupCustomerByUserName("cartTester");
+//			log.info("After Add: " + c.getShoppingCart().toString());
+
+			shoppingCartService.removeAllItemsFromCart(c.getShoppingCart().getId());
+			log.info("After RemoveAll: " + shoppingCartService.getCartForCustomer(c.getId()));
+//			c = customerService.lookupCustomerByUserName("cartTester");
+//			log.info("After RemoveAll: " + c.getShoppingCart().toString());
+
+			shoppingCartService.addItemtoCart(c.getShoppingCart().getId(), p.getId(), 2);
+			log.info("After Add #2: " + shoppingCartService.getCartForCustomer(c.getId()));
+//			c = customerService.lookupCustomerByUserName("cartTester");
+//			log.info("After Add #2: " + c.getShoppingCart().toString());
 			
-			shoppingCartService.addItemtoCart(cart.getId(), p.getId(), 2);
-			cart = shoppingCartService.getCart(cart.getId());
-			log.info(cart.toString());
+			shoppingCartService.removeItemFromCart(c.getShoppingCart().getId(), p.getId(), 1);
+			log.info("After Remove 1 item: " + shoppingCartService.getCartForCustomer(c.getId()));
+//			c = customerService.lookupCustomerByUserName("cartTester");
+//			log.info("After Remove 1 item: " + c.getShoppingCart().toString());
 
-			shoppingCartService.removeAllItemsFromCart(cart.getId());
-			cart = shoppingCartService.getCart(cart.getId());
-			log.info(cart.toString());
+			shoppingCartService.removeItemFromCart(c.getShoppingCart().getId(), p.getId(), 1);
+			log.info("After Remove 1 item: " + shoppingCartService.getCartForCustomer(c.getId()));
+//			c = customerService.lookupCustomerByUserName("cartTester");
+//			log.info("After Remove 1 item: " + c.getShoppingCart().toString());
 
-			shoppingCartService.addItemtoCart(cart.getId(), p.getId(), 2);
-			cart = shoppingCartService.getCart(cart.getId());
-			log.info(cart.toString());
-			
-			shoppingCartService.removeItemFromCart(cart.getId(), p.getId(), 1);
-			cart = shoppingCartService.getCart(cart.getId());
-			log.info(cart.toString());
+			shoppingCartService.removeItemFromCart(c.getShoppingCart().getId(), p.getId(), 1);
+			log.info("After Remove 1 item from empty cart: " + shoppingCartService.getCartForCustomer(c.getId()));
+//			c = customerService.lookupCustomerByUserName("cartTester");
+//			log.info("After Remove 1 item from empty cart: " + c.getShoppingCart().toString());
 
-			shoppingCartService.removeItemFromCart(cart.getId(), p.getId(), 1);
-			cart = shoppingCartService.getCart(cart.getId());
-			log.info(cart.toString());
-
-			shoppingCartService.removeItemFromCart(cart.getId(), p.getId(), 1);
-			cart = shoppingCartService.getCart(cart.getId());
-			log.info(cart.toString());
-
-			shoppingCartService.deleteCart(cart.getId());
+			shoppingCartService.removeAllItemsFromCart(c.getShoppingCart().getId());
+			log.info("After RemoveAll on empty cart: " + shoppingCartService.getCartForCustomer(c.getId()));
+//			c = customerService.lookupCustomerByUserName("cartTester");
+//			log.info("After RemoveAll on empty cart: " + c.getShoppingCart().toString());
 
 			
 		} catch (ServiceException e) {
