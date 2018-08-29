@@ -177,5 +177,5 @@ public class MyMarkAppConfig {
 	public ShoppingCartService shoppingCartService() {
 		return new ShoppingCartServiceImpl();
 	}
-		
+	
 }

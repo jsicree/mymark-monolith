@@ -22,7 +22,7 @@ public class ShoppingCart {
 	private Long id;
 
 	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "CUSTOMER_ID", nullable = false)
 	private Customer customer;
 

@@ -31,15 +31,29 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Autowired
 	private ShoppingCartRepository shoppingCartRepo;
 
-	
 	@Autowired
 	private CartLineItemRepository lineItemRepo;
-	
+
 	@Autowired
 	private CustomerRepository customerRepo;
 
 	@Autowired
 	private ProductRepository productRepo;
+
+	
+	@Override
+	public ShoppingCart createCartForCustomer(Long customerId) throws ServiceException {
+		log.info("In ShoppingCartService.createCartForCustomer()");
+
+		ShoppingCart cart = null;
+		Optional<Customer> optCust = customerRepo.findById(customerId);
+		if (optCust.isPresent()) {
+			log.info("Creating a new cart for customer " + customerId);
+			cart = new ShoppingCart(optCust.get());
+			cart = shoppingCartRepo.save(cart);
+		}
+		return cart;
+	}
 	
 	@Override
 	public ShoppingCart getCart(Long cartId) throws ServiceException {
@@ -47,7 +61,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 		ShoppingCart cart = null;
 		Optional<ShoppingCart> optCart = shoppingCartRepo.findById(cartId);
-		
+
 		if (optCart.isPresent()) {
 			cart = optCart.get();
 		}
@@ -60,23 +74,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		ShoppingCart cart = null;
 
 		log.info("In ShoppingCartService.getCartForCustomer()");
-		
+
 		Customer c = customerRepo.getOne(customerId);
 		if (c != null) {
-			cart = shoppingCartRepo.findByCustomer(c);			
+			cart = shoppingCartRepo.findByCustomer(c);
 		}
-		
+
 		return cart;
 	}
-	
+
 	@Override
 	public void addItemtoCart(Long cartId, Long productId, Integer amount) throws ServiceException {
 		log.info("In ShoppingCartService.addItemtoCart()");
-		log.info("Amount: " + amount);
 
 		Optional<ShoppingCart> optCart = shoppingCartRepo.findById(cartId);
 		Optional<Product> optProd = productRepo.findById(productId);
-		
+
 		if (optCart.isPresent() && optProd.isPresent()) {
 			ShoppingCart cart = optCart.get();
 			CartLineItem lineItem = null;
@@ -85,13 +98,31 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				log.info("Found a lineItem for product and customer");
 				lineItem.setQuantity(lineItem.getQuantity() + amount);
 				lineItemRepo.save(lineItem);
-			} else {			
+			} else {
 				log.info("Did not find a lineItem for product and customer. Creating new lineItem.");
 				lineItem = new CartLineItem(cart, optProd.get(), amount);
 				cart.addLineItem(lineItem);
-				cart = shoppingCartRepo.save(cart);			
-			}							
+				cart = shoppingCartRepo.save(cart);
+			}
 		}
+	}
+
+	@Override
+	public CartLineItem getItemFromCart(Long cartId, Long productId) throws ServiceException {
+		log.info("In ShoppingCartService.getItemFromCart()");
+
+		CartLineItem lineItem = null;
+
+		Optional<ShoppingCart> optCart = shoppingCartRepo.findById(cartId);
+		Optional<Product> optProd = productRepo.findById(productId);
+
+		if (optCart.isPresent() && optProd.isPresent()) {
+			lineItem = lineItemRepo.findByShoppingCartAndProduct(optCart.get(), optProd.get());
+			if (lineItem != null) {
+				log.info("Found a lineItem for cart and product");
+			}
+		}
+		return lineItem;
 	}
 
 	@Override
@@ -100,31 +131,27 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 		Optional<ShoppingCart> optCart = shoppingCartRepo.findById(cartId);
 		Optional<Product> optProd = productRepo.findById(productId);
-				
+
 		CartLineItem lineItem = null;
 		if (optCart.isPresent() && optProd.isPresent()) {
 			ShoppingCart cart = optCart.get();
 			lineItem = lineItemRepo.findByShoppingCartAndProduct(cart, optProd.get());
 			if (lineItem != null) {
-				int newAmount = lineItem.getQuantity() - amount;
-				if (newAmount > 0) {
-					log.info("newAmount > 0");
-					lineItem.setQuantity(newAmount);
-					lineItemRepo.save(lineItem);					
-				} else if (newAmount <= 0) {
-					log.info("newAmount <= 0; " + lineItem.getId());
-					if (cart.getLineItems().contains(lineItem)) {
-						log.info("Cart contains line item");
-						cart.removeLineItem(lineItem);
-						cart = shoppingCartRepo.save(cart);								
-					} else {
-						log.info("Cart does not contain line item");						
-					}
+				if (amount == null || ((lineItem.getQuantity() - amount) <= 0)) {
+					// Remove the item from the cart
+					cart.removeLineItem(lineItem);
+					cart = shoppingCartRepo.save(cart);
+				} else {
+					// Remove specified amount from a line item
+					lineItem.setQuantity((lineItem.getQuantity() - amount));
+					lineItemRepo.save(lineItem);
 				}
 			} else {
-				log.info("No lineItem found for cart and product. Nothing to remove.");
-			}
-		}		
+				log.info("Cart does not contain line item");				
+			}				
+		} else {
+			log.info("No lineItem found for cart and product. Nothing to remove.");
+		}
 	}
 
 	@Override
@@ -134,12 +161,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		Optional<ShoppingCart> optCart = shoppingCartRepo.findById(cartId);
 
 		if (optCart.isPresent()) {
-			ShoppingCart cart = optCart.get();
-			for (CartLineItem l: cart.getLineItems()) {
-				log.info("Deleting " + l);
-				cart.removeLineItem(l);
-			}			
-			cart = shoppingCartRepo.save(cart);								
+			lineItemRepo.deleteCartLineItemByShoppingCart(optCart.get());
+			log.info("Deleted line items for cart: " + cartId);
 		}
 	}
 
@@ -151,31 +174,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 		if (optCart.isPresent()) {
 			ShoppingCart cart = optCart.get();
-			log.info("Deleting line items.");
-			if (!cart.getLineItems().isEmpty()) {
-				for (CartLineItem l: cart.getLineItems()) {
-					log.info("Deleting " + l);
-					cart.removeLineItem(l);
-				}			
-			}
+//			log.info("Deleting line items.");
+//			if (!cart.getLineItems().isEmpty()) {
+//				for (CartLineItem l : cart.getLineItems()) {
+//					log.info("Deleting " + l);
+//					cart.removeLineItem(l);
+//				}
+//			}
 			log.info("Deleting cart.");
-			shoppingCartRepo.delete(cart);								
+			shoppingCartRepo.delete(cart);
 		}
-		
-	}
-
-	@Override
-	public ShoppingCart createCartForCustomer(Long customerId) throws ServiceException {
-		log.info("In ShoppingCartService.createCartForCustomer()");
-
-		ShoppingCart cart =null;
-		Optional<Customer> optCust = customerRepo.findById(customerId);
-		if (optCust.isPresent()) {
-			log.info("Creating a new cart for customer " + customerId);
-			cart = new ShoppingCart(optCust.get());
-			cart = shoppingCartRepo.save(cart);				
-		}
-		return cart;
 	}
 
 }

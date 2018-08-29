@@ -3,6 +3,7 @@
  */
 package com.mymark.app.service;
 
+import com.mymark.app.data.domain.CartLineItem;
 import com.mymark.app.data.domain.ShoppingCart;
 
 /**
@@ -19,6 +20,8 @@ public interface ShoppingCartService {
 
 	public void addItemtoCart(Long cartId, Long productId, Integer amount) throws ServiceException;
 
+	public CartLineItem getItemFromCart(Long cartId, Long productId) throws ServiceException;
+	
 	public void removeItemFromCart(Long cartId, Long productId, Integer amount) throws ServiceException;
 
 	public void removeAllItemsFromCart(Long cartId) throws ServiceException;

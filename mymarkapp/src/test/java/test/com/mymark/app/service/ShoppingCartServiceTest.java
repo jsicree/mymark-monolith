@@ -115,7 +115,7 @@ public class ShoppingCartServiceTest {
 	}
 	
 	@Test
-	public void addItemToShoppingCart() {
+	public void addItemsToShoppingCart() {
 
 		log.info("Running test: addItemToShoppingCart.");
 
@@ -125,44 +125,40 @@ public class ShoppingCartServiceTest {
 
 			ShoppingCart cart = shoppingCartService.getCartForCustomer(c.getId());
 
-			Product p = productService.getAllProducts().get(0);
-			log.info(p.toString());
-						
-			shoppingCartService.addItemtoCart(c.getShoppingCart().getId(), p.getId(), 2);
-			log.info("After Add: " + shoppingCartService.getCartForCustomer(c.getId()));
-//			c = customerService.lookupCustomerByUserName("cartTester");
-//			log.info("After Add: " + c.getShoppingCart().toString());
+			Product p1 = productService.lookupProductByProductCode("PROD-001");
+			log.info(p1.toString());
 
-			shoppingCartService.removeAllItemsFromCart(c.getShoppingCart().getId());
-			log.info("After RemoveAll: " + shoppingCartService.getCartForCustomer(c.getId()));
-//			c = customerService.lookupCustomerByUserName("cartTester");
-//			log.info("After RemoveAll: " + c.getShoppingCart().toString());
-
-			shoppingCartService.addItemtoCart(c.getShoppingCart().getId(), p.getId(), 2);
-			log.info("After Add #2: " + shoppingCartService.getCartForCustomer(c.getId()));
-//			c = customerService.lookupCustomerByUserName("cartTester");
-//			log.info("After Add #2: " + c.getShoppingCart().toString());
+			Product p2 = productService.lookupProductByProductCode("PROD-002");
+			log.info(p2.toString());
 			
-			shoppingCartService.removeItemFromCart(c.getShoppingCart().getId(), p.getId(), 1);
-			log.info("After Remove 1 item: " + shoppingCartService.getCartForCustomer(c.getId()));
-//			c = customerService.lookupCustomerByUserName("cartTester");
-//			log.info("After Remove 1 item: " + c.getShoppingCart().toString());
+			shoppingCartService.addItemtoCart(c.getShoppingCart().getId(), p1.getId(), 1);
+			c = customerService.lookupCustomerByUserName("cartTester");
+			org.junit.Assert.assertEquals("Expected a shopping cart with 1 line items.", 1, c.getShoppingCart().getLineItems().size());
+			log.info("After Add 1 P1: " + shoppingCartService.getCartForCustomer(c.getId()));
 
-			shoppingCartService.removeItemFromCart(c.getShoppingCart().getId(), p.getId(), 1);
-			log.info("After Remove 1 item: " + shoppingCartService.getCartForCustomer(c.getId()));
-//			c = customerService.lookupCustomerByUserName("cartTester");
-//			log.info("After Remove 1 item: " + c.getShoppingCart().toString());
+			shoppingCartService.addItemtoCart(c.getShoppingCart().getId(), p2.getId(), 1);
+			c = customerService.lookupCustomerByUserName("cartTester");
+			org.junit.Assert.assertEquals("Expected a shopping cart with 2 line items.", 2, c.getShoppingCart().getLineItems().size());
+			log.info("After Add 1 P2: " + shoppingCartService.getCartForCustomer(c.getId()));
 
-			shoppingCartService.removeItemFromCart(c.getShoppingCart().getId(), p.getId(), 1);
-			log.info("After Remove 1 item from empty cart: " + shoppingCartService.getCartForCustomer(c.getId()));
-//			c = customerService.lookupCustomerByUserName("cartTester");
-//			log.info("After Remove 1 item from empty cart: " + c.getShoppingCart().toString());
+			shoppingCartService.addItemtoCart(c.getShoppingCart().getId(), p1.getId(), 1);
+			c = customerService.lookupCustomerByUserName("cartTester");
+			log.info("After Add 1 P1: " + shoppingCartService.getCartForCustomer(c.getId()));
+			shoppingCartService.removeItemFromCart(c.getShoppingCart().getId(), p1.getId(), 1);
+			c = customerService.lookupCustomerByUserName("cartTester");
+			log.info("After Remove 1 P1: " + shoppingCartService.getCartForCustomer(c.getId()));
+			shoppingCartService.removeItemFromCart(c.getShoppingCart().getId(), p1.getId(), 1);
+			c = customerService.lookupCustomerByUserName("cartTester");
+			log.info("After Remove 1 P1: " + shoppingCartService.getCartForCustomer(c.getId()));
+						
+			shoppingCartService.addItemtoCart(c.getShoppingCart().getId(), p1.getId(), 1);
+			c = customerService.lookupCustomerByUserName("cartTester");
+			log.info("After Add 1 P1: " + shoppingCartService.getCartForCustomer(c.getId()));
 
 			shoppingCartService.removeAllItemsFromCart(c.getShoppingCart().getId());
-			log.info("After RemoveAll on empty cart: " + shoppingCartService.getCartForCustomer(c.getId()));
-//			c = customerService.lookupCustomerByUserName("cartTester");
-//			log.info("After RemoveAll on empty cart: " + c.getShoppingCart().toString());
-
+			c = customerService.lookupCustomerByUserName("cartTester");
+			org.junit.Assert.assertEquals("Expected a shopping cart with 0 line items.", 0, c.getShoppingCart().getLineItems().size());
+			log.info("After Remove All Items: " + shoppingCartService.getCartForCustomer(c.getId()));
 			
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
@@ -171,46 +167,5 @@ public class ShoppingCartServiceTest {
 
 				
 	}
-	
-	@Ignore
-	@Test
-	public void addUnknownItemToShoppingCart() {
-
-		log.info("Running test: addUnknownItemToShoppingCart.");
-
-		org.junit.Assert.fail("Test addUnknownItemToShoppingCart not implemented");
-				
-	}
-
-	@Ignore
-	@Test
-	public void addUnavailableItemToShoppingCart() {
-
-		log.info("Running test: addUnavailableItemToShoppingCart.");
-
-		org.junit.Assert.fail("Test addUnavailableItemToShoppingCart not implemented");
-				
-	}
-	
-	
-	@Ignore
-	@Test
-	public void removeItemFromShoppingCart() {
-
-		log.info("Running test: removeItemFromShoppingCart.");
-
-		org.junit.Assert.fail("Test removeItemFromShoppingCart not implemented");
-				
-	}
-	
-	@Ignore
-	@Test
-	public void removeUnknownItemFromShoppingCart() {
-
-		log.info("Running test: removeUnknownItemFromShoppingCart.");
-
-		org.junit.Assert.fail("Test removeUnknownItemFromShoppingCart not implemented");
-				
-	}
-	
+		
 }
