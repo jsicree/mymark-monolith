@@ -3,10 +3,6 @@
  */
 package test.com.mymark.app.service;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -15,18 +11,18 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
+import com.mymark.app.config.MyMarkAppConfig;
 import com.mymark.app.data.domain.Account;
-import com.mymark.app.data.domain.Credential;
 import com.mymark.app.data.domain.Customer;
+import com.mymark.app.data.domain.ShoppingCart;
 import com.mymark.app.data.enums.AccountStatus;
 import com.mymark.app.jpa.repository.AccountRepository;
-import com.mymark.app.jpa.repository.CredentialRepository;
 import com.mymark.app.jpa.repository.CustomerRepository;
 import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.ServiceException;
-import com.mymark.app.service.impl.CustomerServiceImpl;
 
 /**
  * @author Joseph Sicree
@@ -47,66 +43,60 @@ public class CustomerServiceTest {
 	
 	protected final static Logger log = LoggerFactory.getLogger(CustomerServiceTest.class);
 
-	protected final static Account NEW_CUSTOMER_ACCOUNT = new Account(1L,AccountStatus.NEW, null);
-	protected final static Credential NEW_CUSTOMER_CREDENTIAL = new Credential(1L,"newpassword");
-	protected final static Customer NEW_CUSTOMER_INPUT = new Customer("new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT);
-	protected final static Customer NEW_CUSTOMER = new Customer(1L, "new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT);
+	protected final static Account NEW_CUSTOMER_ACCOUNT = new Account(1L,null,AccountStatus.NEW, null);
+	protected final static ShoppingCart NEW_CUSTOMER_CART = new ShoppingCart(1L, null);
+	protected final static Customer NEW_CUSTOMER_INPUT = new Customer("new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT, NEW_CUSTOMER_CART);
+	protected final static Customer NEW_CUSTOMER = new Customer(1L, "new_user", "New", "User", "newUser@foo.com", NEW_CUSTOMER_ACCOUNT, NEW_CUSTOMER_CART);
 
-	protected final static Account SEARCH_CUSTOMER_ACCOUNT = new Account(2L,AccountStatus.NEW, null);
-	protected final static Customer SEARCH_CUSTOMER = new Customer(2L, "existing_user", "Existing", "User", "existingUser@foo.com", SEARCH_CUSTOMER_ACCOUNT);
+	protected final static Account SEARCH_CUSTOMER_ACCOUNT = new Account(2L,null, AccountStatus.NEW, null);
+	protected final static ShoppingCart SEARCH_CUSTOMER_CART = new ShoppingCart(2L, null);
+	protected final static Customer SEARCH_CUSTOMER = new Customer(2L, "existing_user", "Existing", "User", "existingUser@foo.com", SEARCH_CUSTOMER_ACCOUNT, SEARCH_CUSTOMER_CART);
 	
-	//private static AbstractApplicationContext context;
+	private static AbstractApplicationContext context;
 	private static CustomerService customerService;
 
 	private static CustomerRepository customerRepoMock;
 	private static AccountRepository accountRepoMock;
-	private static CredentialRepository credentialRepoMock;
 
 	
 	@BeforeClass
 	public static void setup() {
 
-//		context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);
-//		customerService = (CustomerService) context.getBean("customerService");
+		context = new AnnotationConfigApplicationContext(MyMarkAppConfig.class);
+		customerService = (CustomerService) context.getBean("customerService");
+
+		removeCustomers();
+		removeNewCustomers();
+		addCustomers();
+		
 //
-//		removeCustomers();
-//		removeNewCustomers();
-//		addCustomers();
-		
-		accountRepoMock = mock(AccountRepository.class);
-		when(accountRepoMock.save(NEW_CUSTOMER_ACCOUNT)).thenReturn(NEW_CUSTOMER_ACCOUNT);
-
-		customerRepoMock = mock(CustomerRepository.class);
-		when(customerRepoMock.findByUserName(NEW_CUSTOMER.getUserName())).
-			thenReturn(null);
-		when(customerRepoMock.findByEmail(NEW_CUSTOMER.getEmail())).
-		thenReturn(null);
-		when(customerRepoMock.save(any(Customer.class))).
-		thenReturn(NEW_CUSTOMER);
-
-		when(customerRepoMock.findByEmail(SEARCH_CUSTOMER.getEmail())).
-		thenReturn(SEARCH_CUSTOMER);
-		
-		when(customerRepoMock.findByUserName(SEARCH_CUSTOMER.getUserName())).
-		thenReturn(SEARCH_CUSTOMER);
-		
-		credentialRepoMock = mock(CredentialRepository.class);
-		when(credentialRepoMock.save(any(Credential.class))).
-		thenReturn(NEW_CUSTOMER_CREDENTIAL);
-		
-		customerService = new CustomerServiceImpl(customerRepoMock, credentialRepoMock, accountRepoMock);
+//		customerRepoMock = mock(CustomerRepository.class);
+//		when(customerRepoMock.findByUserName(NEW_CUSTOMER.getUserName())).
+//			thenReturn(null);
+//		when(customerRepoMock.findByEmail(NEW_CUSTOMER.getEmail())).
+//		thenReturn(null);
+//		when(customerRepoMock.save(any(Customer.class))).
+//		thenReturn(NEW_CUSTOMER);
+//
+//		when(customerRepoMock.findByEmail(SEARCH_CUSTOMER.getEmail())).
+//		thenReturn(SEARCH_CUSTOMER);
+//		
+//		when(customerRepoMock.findByUserName(SEARCH_CUSTOMER.getUserName())).
+//		thenReturn(SEARCH_CUSTOMER);
+//		
+//		customerService = new CustomerServiceImpl(customerRepoMock);
 	}
 	
 	@AfterClass
 	public static void after() {
-//		removeCustomers();
-//		removeNewCustomers();
-//		if (context != null) {
-//			context.close();
-//		}
+		removeCustomers();
+		removeNewCustomers();
+		if (context != null) {
+			context.close();
+		}
 	}
 
-
+	@Ignore
 	@Test
 	public void createNewCustomerMock() {
 
@@ -124,6 +114,7 @@ public class CustomerServiceTest {
 		
 	}
 
+	@Ignore
 	@Test
 	public void lookupCustomerByUserNameMock() {
 
@@ -139,6 +130,7 @@ public class CustomerServiceTest {
 		}		
 	}
 
+	@Ignore
 	@Test
 	public void lookupCustomerByEmailMock() {
 
@@ -155,7 +147,6 @@ public class CustomerServiceTest {
 	}
 	
 	
-	@Ignore
 	@Test
 	public void createNewCustomer() {
 
@@ -176,7 +167,6 @@ public class CustomerServiceTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void lookupCustomerByEmail() {
 
@@ -194,7 +184,6 @@ public class CustomerServiceTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void lookupCustomerByUserName() {
 

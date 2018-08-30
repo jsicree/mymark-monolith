@@ -76,4 +76,10 @@ public class ProductServiceImpl implements ProductService {
 		return count;
 	}
 
+	@Override
+	public Product lookupProductByProductCode(String productCode) throws ServiceException {
+		Product p = productRepo.findByProductCode(productCode);
+		return p;
+	}
+
 }

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,14 +21,21 @@ public class Account {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+	private Customer customer;
+
 	@Column(name="STATUS")
 	@Enumerated(EnumType.STRING)	
 	private AccountStatus status;
 
+	
 	@OneToOne
 	@JoinColumn(name = "BILLING_ADDRESS_ID")
 	private Address billingAddress;
 
+	
+	
 	public Account() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -39,9 +47,17 @@ public class Account {
 		this.billingAddress = billingAddress;
 	}
 
-	public Account(Long id, AccountStatus status, Address billingAddress) {
+	public Account(Customer customer, AccountStatus status, Address billingAddress) {
+		super();
+		this.customer = customer;
+		this.status = status;
+		this.billingAddress = billingAddress;
+	}
+	
+	public Account(Long id, Customer customer, AccountStatus status, Address billingAddress) {
 		super();
 		this.id = id;
+		this.customer = customer;
 		this.status = status;
 		this.billingAddress = billingAddress;
 	}
@@ -70,6 +86,14 @@ public class Account {
 		this.billingAddress = billingAddress;
 	}
 
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -87,6 +111,7 @@ public class Account {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+//		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + ((billingAddress == null) ? 0 : billingAddress.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
@@ -102,6 +127,11 @@ public class Account {
 		if (getClass() != obj.getClass())
 			return false;
 		Account other = (Account) obj;
+//		if (customer == null) {
+//			if (other.customer != null)
+//				return false;
+//		} else if (!customer.equals(other.customer))
+//			return false;
 		if (billingAddress == null) {
 			if (other.billingAddress != null)
 				return false;

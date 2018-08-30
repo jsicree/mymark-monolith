@@ -3,7 +3,6 @@
  */
 package test.com.mymark.app.service;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,16 +21,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.mymark.app.config.MyMarkAppConfig;
-import com.mymark.app.data.domain.Credential;
-import com.mymark.app.data.domain.Customer;
 import com.mymark.app.data.domain.Product;
-import com.mymark.app.jpa.repository.CredentialRepository;
-import com.mymark.app.jpa.repository.CustomerRepository;
 import com.mymark.app.jpa.repository.InventoryItemRepository;
 import com.mymark.app.jpa.repository.ProductRepository;
 import com.mymark.app.service.ProductService;
 import com.mymark.app.service.ServiceException;
-import com.mymark.app.service.impl.CustomerServiceImpl;
 import com.mymark.app.service.impl.ProductServiceImpl;
 
 /**
@@ -45,7 +39,7 @@ public class ProductServiceTest {
 
 	private static final Long BAD_PRODUCT_ID = 999999L;
 
-	private static final Boolean USE_MOCK = Boolean.TRUE;
+	private static final Boolean USE_MOCK = Boolean.FALSE;
 	
 	private static AbstractApplicationContext context;
 	private static ProductService productService;

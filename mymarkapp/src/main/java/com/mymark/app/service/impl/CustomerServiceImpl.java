@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mymark.app.data.domain.Account;
-import com.mymark.app.data.domain.Credential;
 import com.mymark.app.data.domain.Customer;
+import com.mymark.app.data.domain.ShoppingCart;
 import com.mymark.app.data.enums.AccountStatus;
 import com.mymark.app.jpa.repository.AccountRepository;
-import com.mymark.app.jpa.repository.CredentialRepository;
 import com.mymark.app.jpa.repository.CustomerRepository;
+import com.mymark.app.jpa.repository.ShoppingCartRepository;
 import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.ServiceException;
 
@@ -32,12 +32,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private CustomerRepository customerRepo;
-
-	@Autowired
-	private CredentialRepository credRepo;
-	
-	@Autowired
-	private AccountRepository accountRepo;
 	
 	/**
 	 * 
@@ -47,11 +41,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 
-	public CustomerServiceImpl(CustomerRepository customerRepo, CredentialRepository credRepo,
-			AccountRepository accountRepo) {
+	public CustomerServiceImpl(CustomerRepository customerRepo) {
 		this.customerRepo = customerRepo;
-		this.credRepo = credRepo;
-		this.accountRepo = accountRepo;
 	}
 
 
@@ -73,15 +64,21 @@ public class CustomerServiceImpl implements CustomerService {
 		if (existingCustomer != null) {
 			throw new ServiceException("A customer exists with the specified email " + email);
 		}
-		
-		Account account = accountRepo.save(new Account(AccountStatus.NEW, null));
-		
-		Customer newCustomer = customerRepo.save(new Customer(userName, firstName, lastName, email, account));
 
-		if (newCustomer.getId() != null && !password.isEmpty()) {
-			credRepo.save(new Credential(newCustomer.getId(), password));
-		}
+		Customer newCustomer = new Customer(userName, firstName, lastName, email);
+
+		Account account = new Account(AccountStatus.NEW, null);
+
+		ShoppingCart cart = new ShoppingCart();
+
+		newCustomer.setAccount(account);
+		account.setCustomer(newCustomer);
 		
+		newCustomer.setShoppingCart(cart);
+		cart.setCustomer(newCustomer);
+		
+		customerRepo.save(newCustomer);
+
 		return newCustomer;
 	}
 
@@ -108,35 +105,21 @@ public class CustomerServiceImpl implements CustomerService {
 		return isValid;
 	}
 
-	public Boolean checkCredentials(String userName, String password) throws ServiceException {
-		Boolean isOk = false;
-
-		Customer c = customerRepo.findByUserName(userName);
-		
-		if (c != null && !password.isEmpty()) {
-			Credential cred = credRepo.findByCustomerId(c.getId());
-			if (cred != null) {
-				if (password.equalsIgnoreCase(cred.getPassword())) {
-					isOk = true;
-				}
-			}
-		}
-		return isOk;
-	}
 	
 	public void deleteCustomer(Long id) throws ServiceException {
 
 		Optional<Customer> c = customerRepo.findById(id);
 
 		if (c.isPresent()) {
-			Credential cred = credRepo.findByCustomerId(id);
-			if (cred != null)
-				credRepo.delete(cred);			
+//			ShoppingCart cart = cartRepo.findByCustomer(c.get());
+//			if (cart != null) {
+//				cartRepo.delete(cart);
+//			}
 			customerRepo.deleteById(id);
-			Account a = c.get().getAccount();
-			if (a != null) {
-				accountRepo.deleteById(a.getId());
-			}
+//			Account a = c.get().getAccount();
+//			if (a != null) {
+//				accountRepo.deleteById(a.getId());
+//			}
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.mymark.app.data.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,22 +29,30 @@ public class Customer {
 	@Column(name="EMAIL")
 	private String email;
 
-	@OneToOne
-	@JoinColumn(name = "ACCOUNT_ID")
+    @OneToOne(fetch = FetchType.LAZY,
+    cascade =  CascadeType.ALL,
+    mappedBy = "customer")
 	private Account account;
 
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "customer")
+	private ShoppingCart shoppingCart;
+	
+	
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Customer(String userName, String firstName, String lastName, String email, Account account) {
+	public Customer(String userName, String firstName, String lastName, String email, Account account, ShoppingCart cart) {
 		super();
 		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.account = account;
+		this.shoppingCart = cart;
 	}
 
 	public Customer(String userName, String firstName, String lastName, String email) {
@@ -54,7 +63,7 @@ public class Customer {
 		this.email = email;
 	}
 	
-	public Customer(Long id, String userName, String firstName, String lastName, String email, Account account) {
+	public Customer(Long id, String userName, String firstName, String lastName, String email, Account account, ShoppingCart cart) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -62,6 +71,7 @@ public class Customer {
 		this.lastName = lastName;
 		this.email = email;
 		this.account = account;
+		this.shoppingCart = cart;
 	}
 
 	public Long getId() {
@@ -111,6 +121,14 @@ public class Customer {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+	
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
 
 	@Override
 	public String toString() {
@@ -127,6 +145,8 @@ public class Customer {
 		builder.append(email);
 		builder.append(", account=");
 		builder.append(account);
+		builder.append(", shoppingCart=");
+		builder.append(shoppingCart);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -135,6 +155,7 @@ public class Customer {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((shoppingCart == null) ? 0 : shoppingCart.hashCode());
 		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
@@ -153,6 +174,11 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
+		if (shoppingCart == null) {
+			if (other.shoppingCart != null)
+				return false;
+		} else if (!shoppingCart.equals(other.shoppingCart))
+			return false;
 		if (account == null) {
 			if (other.account != null)
 				return false;
