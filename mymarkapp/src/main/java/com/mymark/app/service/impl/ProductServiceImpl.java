@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
 		Long count = null;
 		Optional<Product> p = productRepo.findById(id);
 		if (p != null && p.isPresent()) {
-			count = inventoryRepo.getAvailableInventory(p.get().getId());			
+			count = inventoryRepo.getAvailableInventoryCount(p.get().getId());			
 		}
 		
 		return count;
