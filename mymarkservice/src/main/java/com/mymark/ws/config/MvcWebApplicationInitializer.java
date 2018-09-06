@@ -8,7 +8,8 @@ public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispat
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { MyMarkAppConfig.class, MyMarkSecurityConfig.class };
+//		return new Class[] { MyMarkAppConfig.class, MyMarkSecurityConfig.class };
+		return new Class[] { MyMarkAppConfig.class};
 	}
 
 	@Override
