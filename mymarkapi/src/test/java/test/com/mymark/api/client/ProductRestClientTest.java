@@ -23,10 +23,10 @@ public class ProductRestClientTest {
 
 	protected final static Logger log = LoggerFactory.getLogger(ProductRestClientTest.class);
 
-	public static String SERVICE_URL = "http://localhost:8080/mymarkservice/api";
+//	public static String SERVICE_URL = "http://localhost:8080/mymarkservice/api";
 	public static String USERNAME = "appuser";
 	public static String PASSWORD = "password";
-//	public static String SERVICE_URL = "http://jrs-mymono-dev.us-east-1.elasticbeanstalk.com/api";
+	public static String SERVICE_URL = "http://jrs-mymark-mono.us-east-1.elasticbeanstalk.com/mymarkservice/api";
 
 
 	public ProductRestClientTest() {

@@ -33,12 +33,11 @@ public class OrderRestClientTest {
 	
 	protected final static Logger log = LoggerFactory.getLogger(OrderRestClientTest.class);
 
-	public static String SERVICE_URL = "http://localhost:8080/mymarkservice/api";
+//	public static String SERVICE_URL = "http://localhost:8080/mymarkservice/api";
+	public static String SERVICE_URL = "http://jrs-mymark-mono.us-east-1.elasticbeanstalk.com/mymarkservice/api";
 	public static String USERNAME = "appuser";
 	public static String PASSWORD = "password";
 	
-//	public static String SERVICE_URL = "http://jrs-mymono-dev.us-east-1.elasticbeanstalk.com/api/customer";
-
 	public static String[] ORDER_CUSTOMER = { "Order", "RestTester", "restTester", "restTester@foo.com", "password1234" };
 	
 	public static String PRODUCT_CODE = "PROD-001";
