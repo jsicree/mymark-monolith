@@ -212,4 +212,68 @@
 		</xs:complexType>
 	</xs:element>
 
+
+	<xs:complexType name="OrderLineItemDto">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="productCode" type="xs:string" />
+			<xs:element name="inventoryId" type="xs:long" />
+			<xs:element name="linePrice" type="xs:double" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OrderLineItemDtoList">
+		<xs:sequence>
+			<xs:element name="lineItems" type="tns:OrderLineItemDto" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OrderDto">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="userName" type="xs:string" />
+			<xs:element name="status" type="xs:string" />
+			<xs:element name="lineItems" type="tns:OrderLineItemDtoList" />			
+			<xs:element name="numLineItems" type="xs:int" />
+			<xs:element name="totalQuantity" type="xs:long" />
+			<xs:element name="totalPrice" type="xs:double" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="CreateOrderRequest">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="userName" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="SubmitOrderRequest">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="userName" type="xs:string" />
+			<xs:element name="orderId" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CancelOrderRequest">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="userName" type="xs:string" />
+			<xs:element name="orderId" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="OrderResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="order" type="tns:OrderDto" />
+			</xs:sequence>
+		</xs:complexType>	
+	</xs:element>
+
+
+
 </xs:schema>

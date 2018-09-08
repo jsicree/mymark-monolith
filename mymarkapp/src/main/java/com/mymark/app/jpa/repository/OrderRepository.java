@@ -1,5 +1,7 @@
 package com.mymark.app.jpa.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -7,21 +9,24 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mymark.app.data.domain.CartLineItem;
-import com.mymark.app.data.domain.Product;
+import com.mymark.app.data.domain.Customer;
+import com.mymark.app.data.domain.Order;
 import com.mymark.app.data.domain.ShoppingCart;
 
 /**
- * Repository to manage {@link CartLineItem} instances.
+ * Repository to manage {@link Order} instances.
  * 
  */
 @Repository 
-public interface CartLineItemRepository extends JpaRepository<CartLineItem, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
-	CartLineItem findByShoppingCartAndProduct(ShoppingCart sc, Product p);
+	public List<Order> findByCustomer(Customer customer);
 	
 	@Transactional
     @Modifying
-    @Query("delete from CART_LINE_ITEM i where i.shoppingCart=:c")
-    public void deleteAllCartLineItemsFromShoppingCart(@Param("c") ShoppingCart c); 
+    @Query("delete from ORDERS i where i.customer=:c")
+    public void deleteAllOrdersByCustomer(@Param("c") Customer c); 
+	
+	
 }
+

@@ -121,6 +121,6 @@ INSERT INTO INVENTORY (product_id, status, in_process_date) values ((SELECT p.id
 INSERT INTO INVENTORY (product_id, status, return_date) values ((SELECT p.id from PRODUCT p where p.product_code = "PROD-002"),"RETURNED", '2018-06-27');
 
 -- CUSTOMER and ACCOUNT
-INSERT INTO ACCOUNT (status) values ("New");
-INSERT INTO CUSTOMER (user_name, first_name, last_name, email, account_id) 
-	values ("firstUser", "FIRST", "USER", "first_user@foo.com", (SELECT a.id FROM ACCOUNT a LIMIT 1));
+-- INSERT INTO ACCOUNT (status) values ("New");
+-- INSERT INTO CUSTOMER (user_name, first_name, last_name, email, account_id) 
+-- 	values ("firstUser", "FIRST", "USER", "first_user@foo.com", (SELECT a.id FROM ACCOUNT a LIMIT 1));

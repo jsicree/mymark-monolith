@@ -7,11 +7,16 @@ import java.util.Set;
 import com.mymark.api.CartLineItemDto;
 import com.mymark.api.CartLineItemDtoList;
 import com.mymark.api.CustomerDto;
+import com.mymark.api.OrderDto;
+import com.mymark.api.OrderLineItemDto;
+import com.mymark.api.OrderLineItemDtoList;
 import com.mymark.api.ProductDetailsDto;
 import com.mymark.api.ProductDto;
 import com.mymark.api.ShoppingCartDto;
 import com.mymark.app.data.domain.CartLineItem;
 import com.mymark.app.data.domain.Customer;
+import com.mymark.app.data.domain.Order;
+import com.mymark.app.data.domain.OrderLineItem;
 import com.mymark.app.data.domain.Product;
 import com.mymark.app.data.domain.ShoppingCart;
 
@@ -105,5 +110,51 @@ public final class DTOConverter {
 			return dto;
 		}	
 
+		public static OrderLineItemDto toOrderLineItemDto(OrderLineItem lineItem) {
+			OrderLineItemDto dto = new OrderLineItemDto();
+
+			dto.setId(lineItem.getId());
+			dto.setInventoryId(lineItem.getInventoryItem().getId());
+			dto.setLinePrice(lineItem.getInventoryItem().getProduct().getPrice());
+			dto.setProductCode(lineItem.getInventoryItem().getProduct().getProductCode());
+			return dto;
+		}
+
+		public static OrderLineItemDtoList toOrderLineItemDtoList(Set<OrderLineItem> lineItems) {
+
+			OrderLineItemDtoList dtoList = new OrderLineItemDtoList();
+
+			if (lineItems != null && !lineItems.isEmpty()) {
+				for (OrderLineItem i : lineItems) {
+					dtoList.getLineItems().add(toOrderLineItemDto(i));					
+				}				
+			}
+			
+			return dtoList;
+		}	
+		
+		public static OrderDto toOrderDto(Order order) {
+			OrderDto dto = new OrderDto();
+
+			dto.setId(order.getId());
+			dto.setStatus(order.getStatus().name());
+			dto.setUserName(order.getCustomer().getUserName());
+			OrderLineItemDtoList itemList = toOrderLineItemDtoList(order.getOrderLineItems());
+			dto.setLineItems(itemList);
+
+			
+			Long totalQuantity = 0L;
+			Double totalPrice = 0.0;
+			
+			for (OrderLineItemDto item : itemList.getLineItems()) {
+				totalQuantity++;
+				totalPrice += item.getLinePrice();				
+			}
+			dto.setTotalPrice(totalPrice);
+			dto.setTotalQuantity(totalQuantity);
+			dto.setNumLineItems(totalQuantity.intValue());
+			dto.setNumLineItems(order.getOrderLineItems().size());
+			return dto;
+		}
 		
 }

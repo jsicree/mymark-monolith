@@ -78,10 +78,10 @@ public class ProductServiceTest {
 		when(productRepoMock.findById(BAD_PRODUCT_ID)).thenReturn(null);
 
 		inventoryRepoMock = mock(InventoryItemRepository.class);
-		when(inventoryRepoMock.getAvailableInventory(productList.get(0).getId())).thenReturn(10L);
-		when(inventoryRepoMock.getAvailableInventory(productList.get(1).getId())).thenReturn(20L);
-		when(inventoryRepoMock.getAvailableInventory(productList.get(2).getId())).thenReturn(30L);
-		when(inventoryRepoMock.getAvailableInventory(BAD_PRODUCT_ID)).thenReturn(null);
+		when(inventoryRepoMock.getAvailableInventoryCount(productList.get(0).getId())).thenReturn(10L);
+		when(inventoryRepoMock.getAvailableInventoryCount(productList.get(1).getId())).thenReturn(20L);
+		when(inventoryRepoMock.getAvailableInventoryCount(productList.get(2).getId())).thenReturn(30L);
+		when(inventoryRepoMock.getAvailableInventoryCount(BAD_PRODUCT_ID)).thenReturn(null);
 
 		productService = new ProductServiceImpl(productRepoMock, inventoryRepoMock);
 	}

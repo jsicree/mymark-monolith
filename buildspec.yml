@@ -11,9 +11,9 @@ phases:
   build:
     commands:
       - echo Build started
-      - mvn -f mymarkapi/pom.xml install
-      - mvn -f mymarkapp/pom.xml install
-      - mvn -f mymarkservice/pom.xml install
+      - mvn -f mymarkapi/pom.xml install -DskipTests
+      - mvn -f mymarkapp/pom.xml install -DskipTests
+      - mvn -f mymarkservice/pom.xml install -DskipTests
       
   post_build:
     commands:

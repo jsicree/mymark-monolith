@@ -77,6 +77,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 		Customer c = customerRepo.getOne(customerId);
 		if (c != null) {
+			log.info("Getting ShoppingCart for Customer: " + c.getId());
 			cart = shoppingCartRepo.findByCustomer(c);
 		}
 
@@ -161,7 +162,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		Optional<ShoppingCart> optCart = shoppingCartRepo.findById(cartId);
 
 		if (optCart.isPresent()) {
-			lineItemRepo.deleteCartLineItemByShoppingCart(optCart.get());
+			lineItemRepo.deleteAllCartLineItemsFromShoppingCart(optCart.get());
 			log.info("Deleted line items for cart: " + cartId);
 		}
 	}

@@ -29,6 +29,7 @@ public class ShoppingCart {
 	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "shoppingCart", orphanRemoval = true)
 	@OrderBy("id")
 	private Set<CartLineItem> lineItems = new LinkedHashSet<CartLineItem>();
+
 	public ShoppingCart() {
 		super();
 		// TODO Auto-generated constructor stub

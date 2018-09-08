@@ -29,10 +29,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mymark.app.service.CustomerService;
 import com.mymark.app.service.GreetingService;
+import com.mymark.app.service.OrderService;
 import com.mymark.app.service.ProductService;
 import com.mymark.app.service.ShoppingCartService;
 import com.mymark.app.service.impl.CustomerServiceImpl;
 import com.mymark.app.service.impl.GreetingServiceImpl;
+import com.mymark.app.service.impl.OrderServiceImpl;
 import com.mymark.app.service.impl.ProductServiceImpl;
 import com.mymark.app.service.impl.ShoppingCartServiceImpl;
 
@@ -135,7 +137,7 @@ public class MyMarkAppConfig {
 	@Bean
 	public JpaVendorAdapter jpaVendorAdapter() {
 		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-		hibernateJpaVendorAdapter.setShowSql(false);
+		hibernateJpaVendorAdapter.setShowSql(true);
 		hibernateJpaVendorAdapter.setGenerateDdl(false);
 		hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
 		return hibernateJpaVendorAdapter;
@@ -176,6 +178,11 @@ public class MyMarkAppConfig {
 	@Bean
 	public ShoppingCartService shoppingCartService() {
 		return new ShoppingCartServiceImpl();
+	}
+
+	@Bean
+	public OrderService orderService() {
+		return new OrderServiceImpl();
 	}
 	
 }
