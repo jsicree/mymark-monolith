@@ -70,8 +70,8 @@ public final class DTOConverter {
 
 			dto.setId(lineItem.getId());
 			dto.setQuantity(lineItem.getQuantity());
-			Double linePrice = lineItem.getQuantity() * lineItem.getProduct().getPrice();			
-			dto.setLinePrice(linePrice);
+//			Double linePrice = lineItem.getQuantity() * lineItem.getProduct().getPrice();			
+			dto.setLinePrice(lineItem.getProduct().getPrice());
 			dto.setProduct(toProductDto(lineItem.getProduct()));
 			
 			return dto;
@@ -102,7 +102,7 @@ public final class DTOConverter {
 			
 			for (CartLineItemDto item : itemList.getLineItems()) {
 				totalQuantity += item.getQuantity();
-				totalPrice += item.getLinePrice();				
+				totalPrice += (item.getQuantity() * item.getLinePrice());				
 			}
 			dto.setTotalPrice(totalPrice.doubleValue());
 			dto.setNumLineItems(itemList.getLineItems().size());
